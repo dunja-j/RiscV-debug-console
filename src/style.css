@@ -1,0 +1,12 @@
+/* Stilovi se popunjavaju u milestone-u M6 (UI). */
+
+body {
+  margin: 0;
+  font-family: Consolas, "Courier New", monospace;
+  background: #1e1e1e;
+  color: #d4d4d4;
+}
+
+#app {
+  padding: 16px;
+}

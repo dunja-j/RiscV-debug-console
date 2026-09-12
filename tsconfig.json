@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    /* Ciljna verzija JavaScript-a u koju se prevodi TypeScript. */
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+
+    /* Koje ugradjene biblioteke tipova koristimo: jezik + browser API (DOM). */
+    "lib": ["ES2022", "DOM"],
+
+    /* Najstroziji rezim provere tipova - najveca korist od TypeScript-a. */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+
+    /* Vite sam prevodi kod, tsc se koristi samo za proveru tipova. */
+    "noEmit": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "skipLibCheck": true
+  },
+  "include": ["src", "tests"]
+}
