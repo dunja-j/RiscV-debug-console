@@ -200,12 +200,153 @@ describe("cpu - tok izvrsavanja", () => {
     expect(cpu.registers[1]).toBe(0);
     expect(cpu.registers[2]).toBe(0);
   });
+});
 
-  it("instrukcije iz kasnijih milestone-ova jos nisu podrzane", () => {
-    const cpu = cpuFor("BEQ x1, x0, kraj\nkraj:");
+describe("cpu - grane", () => {
+  it("BEQ skace kad su registri jednaki", () => {
+    const cpu = run(["BEQ x0, x0, kraj", "LI x1, 99", "kraj:"].join("\n"));
+    expect(cpu.registers[1]).toBe(0);
+  });
+
+  it("BEQ ne skace kad se registri razlikuju", () => {
+    const cpu = run(["LI x1, 1", "BEQ x1, x0, kraj", "LI x2, 99", "kraj:"].join("\n"));
+    expect(cpu.registers[2]).toBe(99);
+  });
+
+  it("BNE skace kad se registri razlikuju", () => {
+    const cpu = run(["LI x1, 1", "BNE x1, x0, kraj", "LI x2, 99", "kraj:"].join("\n"));
+    expect(cpu.registers[2]).toBe(0);
+  });
+
+  it("BLT poredi sa znakom", () => {
+    // -1 < 1, iako bi kao brojevi bez znaka odnos bio obrnut.
+    const cpu = run(["LI x1, -1", "LI x2, 1", "BLT x1, x2, kraj", "LI x3, 99", "kraj:"].join("\n"));
+    expect(cpu.registers[3]).toBe(0);
+  });
+
+  it("petlja broji do 10", () => {
+    const cpu = run(
+      [
+        "LI x1, 0", // brojac
+        "LI x2, 10", // granica
+        "petlja:",
+        "ADDI x1, x1, 1",
+        "BLT x1, x2, petlja",
+      ].join("\n"),
+    );
+    expect(cpu.registers[1]).toBe(10);
+  });
+
+  it("grana unazad vraca PC na tacnu instrukciju", () => {
+    const cpu = cpuFor(["petlja:", "ADDI x1, x1, 1", "BNE x0, x0, petlja"].join("\n"));
+    cpu.step();
+    expect(cpu.pc).toBe(4);
+  });
+});
+
+describe("cpu - skokovi", () => {
+  it("JAL upisuje povratnu adresu i skace", () => {
+    const cpu = cpuFor(["JAL x1, kraj", "NOP", "kraj:"].join("\n"));
+    cpu.step();
+    expect(cpu.registers[1]).toBe(4); // adresa instrukcije posle JAL
+    expect(cpu.pc).toBe(8);
+  });
+
+  it("J ne cuva povratnu adresu jer pise u x0", () => {
+    const cpu = cpuFor(["J kraj", "NOP", "kraj:"].join("\n"));
+    cpu.step();
+    expect(cpu.registers[0]).toBe(0);
+    expect(cpu.pc).toBe(8);
+  });
+
+  it("JAL i RET izvrsavaju poziv funkcije", () => {
+    const cpu = run(
+      [
+        "LI x5, 1",
+        "JAL x1, funkcija",
+        "ADDI x5, x5, 10", // izvrsava se posle povratka
+        "J kraj",
+        "funkcija:",
+        "ADDI x5, x5, 100",
+        "RET",
+        "kraj:",
+      ].join("\n"),
+    );
+    expect(cpu.registers[5]).toBe(111);
+  });
+
+  it("JALR racuna odrediste iz registra i offseta", () => {
+    const cpu = cpuFor(["LI x1, 8", "JALR x2, 0(x1)", "NOP", "NOP"].join("\n"));
+    cpu.step();
+    cpu.step();
+    expect(cpu.pc).toBe(8);
+    expect(cpu.registers[2]).toBe(8); // povratna adresa je instrukcija posle JALR
+  });
+
+  it("skok tacno iza poslednje instrukcije zavrsava program", () => {
+    const cpu = cpuFor(["J kraj", "NOP", "kraj:"].join("\n"));
+    expect(cpu.step().status).toBe("ok");
+    expect(cpu.step().status).toBe("halted");
+  });
+
+  it("skok van programa je greska", () => {
+    const cpu = cpuFor(["LI x1, 400", "JALR x0, 0(x1)"].join("\n"));
+    cpu.step();
     const result = cpu.step();
     expect(result.status).toBe("error");
-    expect(result.message).toContain("BEQ");
-    expect(result.line).toBe(1);
+    expect(result.message).toContain("van programa");
+  });
+
+  it("skok na neporavnatu adresu je greska", () => {
+    const cpu = cpuFor(["LI x1, 2", "JALR x0, 0(x1)"].join("\n"));
+    cpu.step();
+    const result = cpu.step();
+    expect(result.status).toBe("error");
+    expect(result.message).toContain("neporavnatu");
+  });
+});
+
+describe("cpu - run i limit instrukcija", () => {
+  it("run izvrsava ceo program", () => {
+    const cpu = cpuFor(["LI x1, 5", "LI x2, 7", "ADD x3, x1, x2"].join("\n"));
+    expect(cpu.run().status).toBe("halted");
+    expect(cpu.registers[3]).toBe(12);
+  });
+
+  it("run prekida beskonacnu petlju", () => {
+    const cpu = cpuFor(["petlja:", "J petlja"].join("\n"));
+    const result = cpu.run(1000);
+    expect(result.status).toBe("error");
+    expect(result.message).toContain("beskonacna petlja");
+  });
+
+  it("run vraca gresku iz izvrsavanja", () => {
+    const cpu = cpuFor("LW x1, 2(x0)");
+    const result = cpu.run();
+    expect(result.status).toBe("error");
+    expect(result.message).toContain("poravnata");
+  });
+});
+
+describe("cpu - koriscenje registara", () => {
+  it("pamti registre u koje je pisano", () => {
+    const cpu = run(["LI x1, 5", "LI x3, 7"].join("\n"));
+    expect([...cpu.usedRegisters].sort((a, b) => a - b)).toEqual([1, 3]);
+  });
+
+  it("registar ostaje zabelezen i kad mu se vrednost vrati na nulu", () => {
+    const cpu = run(["LI x1, 5", "LI x1, 0"].join("\n"));
+    expect(cpu.usedRegisters.has(1)).toBe(true);
+  });
+
+  it("x0 se nikad ne belezi", () => {
+    const cpu = run("LI x0, 99");
+    expect(cpu.usedRegisters.size).toBe(0);
+  });
+
+  it("reset brise spisak koriscenih registara", () => {
+    const cpu = run("LI x1, 5");
+    cpu.reset();
+    expect(cpu.usedRegisters.size).toBe(0);
   });
 });
