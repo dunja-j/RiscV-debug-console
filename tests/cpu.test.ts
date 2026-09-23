@@ -82,6 +82,77 @@ describe("cpu - 32-bitno ponasanje", () => {
   });
 });
 
+describe("cpu - memorija", () => {
+  it("SW pa LW vraca istu vrednost", () => {
+    const cpu = run(["LI x1, 42", "SW x1, 0(x0)", "LW x2, 0(x0)"].join("\n"));
+    expect(cpu.registers[2]).toBe(42);
+  });
+
+  it("rec se upisuje u little-endian poretku", () => {
+    const cpu = cpuFor("SW x1, 0(x0)");
+    cpu.registers[1] = 0x12345678;
+    cpu.step();
+    // Najnizi bajt ide na najnizu adresu.
+    expect(Array.from(cpu.memory.slice(0, 4))).toEqual([0x78, 0x56, 0x34, 0x12]);
+  });
+
+  it("negativna vrednost prezivi upis i citanje", () => {
+    const cpu = run(["LI x1, -5", "SW x1, 4(x0)", "LW x2, 4(x0)"].join("\n"));
+    expect(cpu.registers[2]).toBe(-5);
+  });
+
+  it("adresa je zbir registra i offseta", () => {
+    const cpu = run(["LI x1, 8", "LI x2, 99", "SW x2, 4(x1)"].join("\n"));
+    expect(cpu.readWord(12)).toBe(99);
+  });
+
+  it("citanje iz nedirane memorije daje nulu", () => {
+    const cpu = run("LW x1, 100(x0)");
+    expect(cpu.registers[1]).toBe(0);
+  });
+
+  it("pamti adrese u koje je upisivano", () => {
+    const cpu = run(["LI x1, 7", "SW x1, 0(x0)", "SW x1, 8(x0)"].join("\n"));
+    expect([...cpu.writtenWords].sort((a, b) => a - b)).toEqual([0, 8]);
+  });
+
+  it("neporavnata adresa je greska", () => {
+    const cpu = cpuFor("LW x1, 2(x0)");
+    const result = cpu.step();
+    expect(result.status).toBe("error");
+    expect(result.message).toContain("poravnata");
+  });
+
+  it("adresa van memorije je greska", () => {
+    // 2000 + 2000 + 96 = 4096, tacno iza kraja memorije od 4096 bajtova.
+    const cpu = cpuFor(["LI x1, 2000", "LI x2, 2000", "ADD x3, x1, x2", "SW x1, 96(x3)"].join("\n"));
+
+    let result = cpu.step();
+    while (result.status === "ok") {
+      result = cpu.step();
+    }
+
+    expect(result.status).toBe("error");
+    expect(result.message).toContain("van memorije");
+  });
+
+  it("negativna adresa je greska", () => {
+    const cpu = cpuFor("LW x1, -4(x0)");
+    const result = cpu.step();
+    expect(result.status).toBe("error");
+    expect(result.message).toContain("van memorije");
+  });
+
+  it("reset brise memoriju i spisak upisanih adresa", () => {
+    const cpu = run(["LI x1, 7", "SW x1, 0(x0)"].join("\n"));
+    expect(cpu.writtenWords.size).toBe(1);
+
+    cpu.reset();
+    expect(cpu.readWord(0)).toBe(0);
+    expect(cpu.writtenWords.size).toBe(0);
+  });
+});
+
 describe("cpu - registar x0", () => {
   it("citanje iz x0 uvek daje nulu", () => {
     const cpu = run("ADD x1, x0, x0");
@@ -131,10 +202,10 @@ describe("cpu - tok izvrsavanja", () => {
   });
 
   it("instrukcije iz kasnijih milestone-ova jos nisu podrzane", () => {
-    const cpu = cpuFor("LW x1, 0(x0)");
+    const cpu = cpuFor("BEQ x1, x0, kraj\nkraj:");
     const result = cpu.step();
     expect(result.status).toBe("error");
-    expect(result.message).toContain("LW");
+    expect(result.message).toContain("BEQ");
     expect(result.line).toBe(1);
   });
 });
