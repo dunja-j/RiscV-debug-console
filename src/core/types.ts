@@ -40,3 +40,45 @@ export interface ParseResult {
   lines: ParsedLine[];
   errors: AsmError[];
 }
+
+/** Svih 15 instrukcija koje simulator zna da izvrsi (pseudo-instrukcije se prevode u njih). */
+export type OpCode =
+  | "ADD"
+  | "SUB"
+  | "ADDI"
+  | "AND"
+  | "OR"
+  | "XOR"
+  | "SLL"
+  | "SRL"
+  | "LW"
+  | "SW"
+  | "BEQ"
+  | "BNE"
+  | "BLT"
+  | "JAL"
+  | "JALR";
+
+/**
+ * Asemblirana instrukcija, spremna za izvrsavanje.
+ * Polja koja data instrukcija ne koristi ostaju 0 - time sve instrukcije imaju
+ * isti oblik, pa je CPU petlja jednostavna.
+ */
+export interface Instruction {
+  op: OpCode;
+  rd: number;
+  rs1: number;
+  rs2: number;
+  /** Konstanta; kod grana i skokova je PC-relativni pomeraj u bajtovima. */
+  imm: number;
+  /** Linija u editoru iz koje je instrukcija nastala (za `>` marker i breakpointe). */
+  sourceLine: number;
+}
+
+export interface AssembleResult {
+  /** Instrukcije po redosledu izvrsavanja; adresa instrukcije i je i * 4. */
+  program: Instruction[];
+  /** Ime labele -> adresa u bajtovima. */
+  labels: Map<string, number>;
+  errors: AsmError[];
+}
