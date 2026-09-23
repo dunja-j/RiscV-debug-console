@@ -109,7 +109,10 @@ pc:        number           // kreće od 0, raste za 4; indeks instrukcije = pc 
 
 **Registri**
 
-- Prikazuje se svih 32 registra, uvek.
+- Prikazuju se samo registri u koje je bar jednom upisano; ostaju vidljivi i kada im se
+  vrednost vrati na 0.
+  *(Izmenjeno posle M3.5: prvobitna odluka je bila „svih 32 uvek", ali je spisak od 32 reda
+  u praksi nepregledan — programi koriste nekoliko registara. Vidi `ui-zelje.md`.)*
 - Format: hex (8 cifara, kao na mokapu) **i** decimalno sa znakom pored — npr. `x1  00000005  (5)`.
 - Registri promenjeni poslednjom izvršenom instrukcijom se vizuelno obeležavaju.
 
