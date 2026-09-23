@@ -1,4 +1,4 @@
-/* Stilovi se popunjavaju u milestone-u M6 (UI). */
+/* Privremeni stilovi (M3.5) - pravi raspored po mokapu dolazi u M6. */
 
 body {
   margin: 0;
@@ -9,4 +9,41 @@ body {
 
 #app {
   padding: 16px;
+}
+
+h1 {
+  font-size: 18px;
+}
+
+h2 {
+  font-size: 14px;
+  color: #9cdcfe;
+}
+
+.kolone {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+}
+
+textarea {
+  font: inherit;
+  background: #252526;
+  color: #d4d4d4;
+  border: 1px solid #3c3c3c;
+  padding: 8px;
+}
+
+.dugmad {
+  margin-top: 8px;
+}
+
+button {
+  font: inherit;
+  margin-right: 8px;
+  padding: 4px 12px;
+}
+
+.greske {
+  color: #f48771;
 }
