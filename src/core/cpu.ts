@@ -1,7 +1,6 @@
 import type { Instruction } from "./types";
 
-// Model procesora: stanje (registri, memorija, PC) i izvrsavanje jedne instrukcije.
-// Grane i skokovi dolaze u M5.
+// Model procesora: stanje (registri, memorija, PC) i izvrsavanje instrukcija.
 
 const REGISTER_COUNT = 32;
 const INSTRUCTION_SIZE = 4;
@@ -10,6 +9,8 @@ const MEMORY_SIZE = 4096;
 const WORD_SIZE = 4;
 /** Pomeraj koristi samo donjih 5 bita - 32-bitni broj nema smisla pomerati za vise od 31. */
 const SHIFT_MASK = 0x1f;
+/** Zastita od beskonacne petlje pri izvrsavanju celog programa. */
+const MAX_STEPS = 100_000;
 
 export interface StepResult {
   /** "ok" = izvrseno, "halted" = program je gotov, "error" = izvrsavanje prekinuto. */
@@ -33,7 +34,13 @@ export class Cpu {
   /** Adrese reci u koje je program upisivao - panel MEMORIJA prikazuje samo njih. */
   readonly writtenWords = new Set<number>();
 
+  /** Registri u koje je pisano - panel REGISTRI prikazuje samo njih. */
+  readonly usedRegisters = new Set<number>();
+
   pc = 0;
+
+  /** Adresa sledece instrukcije; grane i skokovi je menjaju tokom izvrsavanja. */
+  private nextPc = 0;
 
   /** DataView cita i pise 32-bitne reci nad istim bajtovima, u little-endian poretku. */
   private readonly view = new DataView(this.memory.buffer);
@@ -45,6 +52,7 @@ export class Cpu {
     this.registers.fill(0);
     this.memory.fill(0);
     this.writtenWords.clear();
+    this.usedRegisters.clear();
     this.pc = 0;
   }
 
@@ -69,13 +77,33 @@ export class Cpu {
       return { status: "halted" };
     }
 
+    // PC ostaje nepromenjen tokom izvrsavanja; instrukcija menja samo nextPc.
+    // Zato JAL i JALR mogu mirno da racunaju povratnu adresu iz pc.
+    this.nextPc = this.pc + INSTRUCTION_SIZE;
+
     const error = this.execute(instruction);
     if (error !== null) {
       return { status: "error", message: error, line: instruction.sourceLine };
     }
 
-    this.pc += INSTRUCTION_SIZE;
+    this.pc = this.nextPc;
     return { status: "ok", line: instruction.sourceLine };
+  }
+
+  /** Izvrsava program do kraja, greske ili dostignutog limita instrukcija. */
+  run(maxSteps: number = MAX_STEPS): StepResult {
+    for (let executed = 0; executed < maxSteps; executed++) {
+      const result = this.step();
+      if (result.status !== "ok") {
+        return result;
+      }
+    }
+
+    return {
+      status: "error",
+      message: `prekoracen limit od ${maxSteps} instrukcija (moguca beskonacna petlja)`,
+      line: this.currentInstruction?.sourceLine,
+    };
   }
 
   /** Vraca poruku o gresci, ili null ako je instrukcija uspesno izvrsena. */
@@ -117,12 +145,51 @@ export class Cpu {
         return this.store(a + imm, b);
 
       case "BEQ":
+        return this.branch(a === b, imm);
       case "BNE":
+        return this.branch(a !== b, imm);
       case "BLT":
+        // Poredjenje je sa znakom jer su registri Int32Array.
+        return this.branch(a < b, imm);
+
       case "JAL":
+        return this.jump(rd, this.pc + imm);
       case "JALR":
-        return `instrukcija ${op} jos nije podrzana`;
+        // Specifikacija RISC-V propisuje brisanje najnizeg bita odredisne adrese.
+        return this.jump(rd, (a + imm) & ~1);
     }
+  }
+
+  /** Grana: ako je uslov ispunjen, sledeca instrukcija je na pc + imm. */
+  private branch(taken: boolean, offset: number): string | null {
+    if (!taken) {
+      return null;
+    }
+    return this.setNextPc(this.pc + offset);
+  }
+
+  /** Skok: povratna adresa ide u rd, pa se prelazi na odrediste. */
+  private jump(rd: number, target: number): string | null {
+    const problem = this.setNextPc(target);
+    if (problem !== null) {
+      return problem;
+    }
+    // Upis ide posle provere i posle racunanja odredista, da radi i kad je rd == rs1.
+    this.setRegister(rd, this.pc + INSTRUCTION_SIZE);
+    return null;
+  }
+
+  private setNextPc(target: number): string | null {
+    if (target % INSTRUCTION_SIZE !== 0) {
+      return `skok na neporavnatu adresu ${target}`;
+    }
+    // Adresa tacno iza poslednje instrukcije je dozvoljena - tu se program zavrsava.
+    if (target < 0 || target > this.program.length * INSTRUCTION_SIZE) {
+      return `skok van programa (adresa ${target})`;
+    }
+
+    this.nextPc = target;
+    return null;
   }
 
   private load(rd: number, address: number): string | null {
@@ -150,6 +217,7 @@ export class Cpu {
       return;
     }
     this.registers[num] = value;
+    this.usedRegisters.add(num);
   }
 }
 
