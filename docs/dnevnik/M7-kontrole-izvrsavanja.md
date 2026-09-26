@@ -17,7 +17,7 @@ promenjenih poslednjom akcijom.
 
 | Odluka | Alternativa koju smo odbacili | Zašto |
 |---|---|---|
-| `Run` proverava tekuću instrukciju pre prvog koraka, a zapamćeni breakpoint preskače jednom pri nastavku | Provera samo posle svakog koraka | Breakpoint na prvoj instrukciji mora da zaustavi program pre izvršavanja, ali ponovni `Run` mora jednom da ga preskoči kako se izvršavanje ne bi zaglavilo na istom mestu |
+| `Run` proverava breakpointe **tek posle** izvršenog koraka | Provera pre svakog koraka | Program je već zaustavljen pred tekućom instrukcijom, bilo posle asembliranja, Step-a ili prethodnog breakpointa. Run zato prvo izvršava tu instrukciju, pa staje ako sledeća ima breakpoint |
 | Breakpointi se pamte po **broju linije u editoru** | Po adresi instrukcije | Korisnik klikće na linije; adresa mu nije vidljiva |
 | Breakpoint se može postaviti samo na liniju koja nosi instrukciju | Dozvoliti bilo gde | Breakpoint na komentaru ili praznoj liniji nikad ne bi bio pogođen — tiho neispravno ponašanje |
 | Klik na liniju postavlja/skida breakpoint; dugme „Breakpoint" radi isto za tekuću liniju | Klik *bira* liniju, dugme postavlja | Manje stanja u UI-ju (nema „izabrane linije"), a dugme sa mokapa i dalje ima smisao |
@@ -46,8 +46,9 @@ promenjenih poslednjom akcijom.
 - ponovni `run` sa zaustavljene instrukcije nastavlja dalje umesto da stane na istom mestu;
 - breakpoint na liniji koja ne nosi instrukciju nema efekta.
 
-Naknadni pregled ivičnih slučajeva u M8 dodao je proveru breakpointa na prvoj instrukciji
-i precizirao nastavak izvršavanja sa zapamćenog breakpointa.
+Naknadni pregled ivičnih slučajeva u M8 potvrdio je da isto pravilo važi i za prvu
+instrukciju: početni marker `>` već znači da je program zaustavljen pred njom, pa je prvi
+Run izvršava. Ako se izvršavanje kasnije vrati na tu liniju, breakpoint se normalno aktivira.
 
 **Ručno, u browseru** — pun ciklus na programu koji sabira brojeve 1..3 u petlji:
 Step pomera `>` i puni panel registara → klik na liniju 7 postavlja tačku → Run staje na njoj

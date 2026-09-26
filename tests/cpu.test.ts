@@ -388,18 +388,6 @@ describe("cpu - run i limit instrukcija", () => {
     expect(cpu.registers[3]).toBe(0);
   });
 
-  it("run postuje breakpoint na prvoj instrukciji", () => {
-    const cpu = cpuFor(["LI x1, 1", "LI x2, 2"].join("\n"));
-    const breakpoints = new Set([1]);
-
-    expect(cpu.run({ breakpoints })).toEqual({ status: "breakpoint", line: 1 });
-    expect(cpu.pc).toBe(0);
-    expect(cpu.registers[1]).toBe(0);
-
-    expect(cpu.run({ breakpoints }).status).toBe("halted");
-    expect(cpu.registers[1]).toBe(1);
-  });
-
   it("ponovni run sa zaustavljene instrukcije ide dalje", () => {
     const cpu = cpuFor(["LI x1, 1", "LI x2, 2", "LI x3, 3"].join("\n"));
     const breakpoints = new Set([2]);
@@ -408,6 +396,21 @@ describe("cpu - run i limit instrukcija", () => {
     // Bez izvrsavanja bar jednog koraka, Run bi ovde ponovo stao na istoj liniji.
     expect(cpu.run({ breakpoints }).status).toBe("halted");
     expect(cpu.registers[3]).toBe(3);
+  });
+
+  it("run izvrsava trenutnu instrukciju i kad je na njoj breakpoint", () => {
+    const cpu = cpuFor(["LI x1, 1", "LI x2, 2"].join("\n"));
+    expect(cpu.run({ breakpoints: new Set([1]) }).status).toBe("halted");
+    expect(cpu.registers[1]).toBe(1);
+  });
+
+  it("run nastavlja kad step dovede PC na instrukciju sa breakpointom", () => {
+    const cpu = cpuFor(["LI x1, 1", "LI x2, 2"].join("\n"));
+    expect(cpu.step().status).toBe("ok");
+    expect(cpu.pc).toBe(4);
+
+    expect(cpu.run({ breakpoints: new Set([2]) }).status).toBe("halted");
+    expect(cpu.registers[2]).toBe(2);
   });
 
   it("breakpoint na liniji koja se ne izvrsava nema efekta", () => {

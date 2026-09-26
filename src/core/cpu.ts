@@ -51,9 +51,6 @@ export class Cpu {
   /** Adresa sledece instrukcije; grane i skokovi je menjaju tokom izvrsavanja. */
   private nextPc = 0;
 
-  /** Breakpoint koji jedan naredni Run treba da preskoci da bi izvrsavanje moglo da se nastavi. */
-  private resumeBreakpointPc: number | null = null;
-
   /** DataView cita i pise 32-bitne reci nad istim bajtovima, u little-endian poretku. */
   private readonly view = new DataView(this.memory.buffer);
 
@@ -66,7 +63,6 @@ export class Cpu {
     this.writtenWords.clear();
     this.usedRegisters.clear();
     this.pc = 0;
-    this.resumeBreakpointPc = null;
   }
 
   /** Cita 32-bitnu rec sa poravnate adrese (koristi UI za prikaz memorije). */
@@ -85,7 +81,6 @@ export class Cpu {
 
   /** Izvrsava jednu instrukciju. */
   step(): StepResult {
-    this.resumeBreakpointPc = null;
     const instruction = this.currentInstruction;
     if (instruction === null) {
       return { status: "halted" };
@@ -106,18 +101,6 @@ export class Cpu {
 
   /** Izvrsava program do kraja, breakpointa, greske ili dostignutog limita instrukcija. */
   run({ breakpoints, maxSteps = MAX_STEPS }: RunOptions = {}): StepResult {
-    const current = this.currentInstruction;
-    if (current === null) {
-      return { status: "halted" };
-    }
-
-    const resumesFromBreakpoint = this.resumeBreakpointPc === this.pc;
-    this.resumeBreakpointPc = null;
-    if (!resumesFromBreakpoint && breakpoints?.has(current.sourceLine)) {
-      this.resumeBreakpointPc = this.pc;
-      return { status: "breakpoint", line: current.sourceLine };
-    }
-
     for (let executed = 0; executed < maxSteps; executed++) {
       const result = this.step();
       if (result.status !== "ok") {
@@ -129,7 +112,6 @@ export class Cpu {
         return { status: "halted" };
       }
       if (breakpoints?.has(next.sourceLine)) {
-        this.resumeBreakpointPc = this.pc;
         return { status: "breakpoint", line: next.sourceLine };
       }
     }
