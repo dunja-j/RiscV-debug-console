@@ -17,7 +17,7 @@ promenjenih poslednjom akcijom.
 
 | Odluka | Alternativa koju smo odbacili | Zašto |
 |---|---|---|
-| `Run` proverava breakpointe **tek posle** izvršenog koraka | Provera pre svakog koraka | Inače bi `Run`, pokrenut sa zaustavljene instrukcije, odmah ponovo stao na istom mestu i izvršavanje se nikad ne bi pomerilo. Svaki debager rešava to isto |
+| `Run` proverava tekuću instrukciju pre prvog koraka, a zapamćeni breakpoint preskače jednom pri nastavku | Provera samo posle svakog koraka | Breakpoint na prvoj instrukciji mora da zaustavi program pre izvršavanja, ali ponovni `Run` mora jednom da ga preskoči kako se izvršavanje ne bi zaglavilo na istom mestu |
 | Breakpointi se pamte po **broju linije u editoru** | Po adresi instrukcije | Korisnik klikće na linije; adresa mu nije vidljiva |
 | Breakpoint se može postaviti samo na liniju koja nosi instrukciju | Dozvoliti bilo gde | Breakpoint na komentaru ili praznoj liniji nikad ne bi bio pogođen — tiho neispravno ponašanje |
 | Klik na liniju postavlja/skida breakpoint; dugme „Breakpoint" radi isto za tekuću liniju | Klik *bira* liniju, dugme postavlja | Manje stanja u UI-ju (nema „izabrane linije"), a dugme sa mokapa i dalje ima smisao |
@@ -45,6 +45,9 @@ promenjenih poslednjom akcijom.
 - `run` staje pred instrukcijom sa breakpointom, i ta instrukcija **nije** izvršena;
 - ponovni `run` sa zaustavljene instrukcije nastavlja dalje umesto da stane na istom mestu;
 - breakpoint na liniji koja ne nosi instrukciju nema efekta.
+
+Naknadni pregled ivičnih slučajeva u M8 dodao je proveru breakpointa na prvoj instrukciji
+i precizirao nastavak izvršavanja sa zapamćenog breakpointa.
 
 **Ručno, u browseru** — pun ciklus na programu koji sabira brojeve 1..3 u petlji:
 Step pomera `>` i puni panel registara → klik na liniju 7 postavlja tačku → Run staje na njoj
