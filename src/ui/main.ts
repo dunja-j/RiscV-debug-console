@@ -1,30 +1,18 @@
 import { assemble } from "../core/assembler";
 import { Cpu } from "../core/cpu";
 import type { StepResult } from "../core/cpu";
+import { PROGRAM_EXAMPLES } from "./examples";
 import { renderErrors, renderListing, renderMemory, renderRegisters } from "./render";
 
 // Povezivanje UI-ja sa logikom iz core/. Ovaj modul drzi stanje ekrana
 // (rezim, ucitani procesor, breakpointi) i reaguje na dogadjaje;
 // iscrtavanje je u render.ts.
 
-const PRIMER = [
-  "# zbir brojeva od 1 do 5",
-  "LI x1, 0        # zbir",
-  "LI x2, 1        # brojac",
-  "LI x3, 6        # granica",
-  "",
-  "petlja:",
-  "ADD x1, x1, x2",
-  "ADDI x2, x2, 1",
-  "BLT x2, x3, petlja",
-  "",
-  "SW x1, 0(x0)    # rezultat u memoriju",
-].join("\n");
-
 /** U rezimu pisanja kod se menja; u rezimu izvrsavanja je zakljucan. */
 type Mode = "pisanje" | "izvrsavanje";
 
 const editor = element<HTMLTextAreaElement>("#editor");
+const exampleSelect = element<HTMLSelectElement>("#example");
 const listing = element<HTMLElement>("#listing");
 const errorsPanel = element<HTMLElement>("#errors");
 const registersPanel = element<HTMLElement>("#registers");
@@ -50,8 +38,16 @@ let changedRegisters: ReadonlySet<number> = new Set();
 /** Program je stigao do kraja ili je prekinut greskom. */
 let finished = false;
 
-editor.value = PRIMER;
+for (const example of PROGRAM_EXAMPLES) {
+  const option = document.createElement("option");
+  option.value = example.id;
+  option.textContent = example.name;
+  exampleSelect.append(option);
+}
+
+editor.value = PROGRAM_EXAMPLES[0].source;
 editor.addEventListener("input", onEdit);
+exampleSelect.addEventListener("change", onExampleSelected);
 assembleButton.addEventListener("click", enterRunMode);
 editButton.addEventListener("click", enterEditMode);
 runButton.addEventListener("click", onRun);
@@ -97,6 +93,20 @@ function enterEditMode(): void {
 function onEdit(): void {
   renderErrors(errorsPanel, []);
   setStatus("kod je izmenjen - pritisni Asembliraj");
+}
+
+function onExampleSelected(): void {
+  const example = PROGRAM_EXAMPLES.find((item) => item.id === exampleSelect.value);
+  if (example === undefined) {
+    return;
+  }
+
+  editor.value = example.source;
+  exampleSelect.value = "";
+  onEdit();
+  editor.focus();
+  editor.setSelectionRange(0, 0);
+  editor.scrollTop = 0;
 }
 
 function onStep(): void {
@@ -203,6 +213,7 @@ function render(): void {
 
   assembleButton.disabled = running;
   editButton.disabled = !running;
+  exampleSelect.disabled = running;
   runButton.disabled = !running || finished;
   stepButton.disabled = !running || finished;
   resetButton.disabled = !running;

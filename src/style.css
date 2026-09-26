@@ -57,6 +57,35 @@ h2 {
   color: var(--akcent-tamni);
 }
 
+.panel-zaglavlje {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.panel-zaglavlje h2 {
+  margin: 0;
+}
+
+.panel-zaglavlje select {
+  max-width: 240px;
+  font: inherit;
+  padding: 3px 8px;
+  background: var(--pozadina);
+  color: var(--tekst);
+  border: 1px solid var(--ivica);
+}
+
+.panel-zaglavlje select:focus {
+  outline: 1px solid var(--akcent);
+}
+
+.panel-zaglavlje select:disabled {
+  color: var(--prigusen);
+}
+
 /* Program zauzima najvise prostora; registri i memorija stoje sa strane. */
 .radna-povrsina {
   display: grid;
