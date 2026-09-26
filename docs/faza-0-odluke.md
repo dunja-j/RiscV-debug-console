@@ -114,7 +114,10 @@ pc:        number           // kreće od 0, raste za 4; indeks instrukcije = pc 
   *(Izmenjeno posle M3.5: prvobitna odluka je bila „svih 32 uvek", ali je spisak od 32 reda
   u praksi nepregledan — programi koriste nekoliko registara. Vidi `ui-zelje.md`.)*
 - Format: hex (8 cifara, kao na mokapu) **i** decimalno sa znakom pored — npr. `x1  00000005  (5)`.
-- Registri promenjeni poslednjom izvršenom instrukcijom se vizuelno obeležavaju.
+- Registri promenjeni poslednjom akcijom se vizuelno obeležavaju: kod `Step`-a to su
+  promene jedne instrukcije, kod `Run`-a sve promene nastale tokom tog izvršavanja.
+  *(Precizirano u M7: prvobitna formulacija je pominjala samo „poslednju izvršenu
+  instrukciju", što nema jasno značenje posle `Run`-a.)*
 
 **Memorija**
 

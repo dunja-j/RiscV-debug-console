@@ -108,6 +108,19 @@ textarea {
   background: var(--isticanje);
 }
 
+.linija.izvrsiva {
+  cursor: pointer;
+}
+
+.linija.izvrsiva:hover .breakpoint::before {
+  content: "\25CF";
+  color: var(--ivica);
+}
+
+.linija .breakpoint {
+  color: var(--greska);
+}
+
 .linija .marker {
   color: var(--akcent);
   font-weight: bold;
@@ -132,6 +145,12 @@ textarea {
 .vrednost .dec {
   color: var(--prigusen);
   text-align: right;
+}
+
+/* Registri promenjeni poslednjom akcijom. */
+.vrednost.promenjen .hex,
+.vrednost.promenjen .dec {
+  color: var(--akcent);
 }
 
 .napomena {
@@ -185,6 +204,10 @@ button:disabled .ikona {
 
 .status {
   margin-left: auto;
+  /* Duga poruka se skracuje umesto da razvuce traku. */
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
   color: var(--prigusen);
 }

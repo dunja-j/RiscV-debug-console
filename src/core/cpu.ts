@@ -13,12 +13,21 @@ const SHIFT_MASK = 0x1f;
 const MAX_STEPS = 100_000;
 
 export interface StepResult {
-  /** "ok" = izvrseno, "halted" = program je gotov, "error" = izvrsavanje prekinuto. */
-  status: "ok" | "halted" | "error";
+  /**
+   * "ok" = izvrseno, "halted" = program je gotov, "error" = izvrsavanje prekinuto,
+   * "breakpoint" = zaustavljeno pred instrukcijom sa breakpointom (vraca samo run).
+   */
+  status: "ok" | "halted" | "error" | "breakpoint";
   /** Popunjeno samo kod greske. */
   message?: string;
   /** Linija izvorne instrukcije, za oznacavanje u editoru. */
   line?: number;
+}
+
+export interface RunOptions {
+  /** Brojevi linija u editoru na kojima izvrsavanje treba da stane. */
+  breakpoints?: ReadonlySet<number>;
+  maxSteps?: number;
 }
 
 export class Cpu {
@@ -90,12 +99,19 @@ export class Cpu {
     return { status: "ok", line: instruction.sourceLine };
   }
 
-  /** Izvrsava program do kraja, greske ili dostignutog limita instrukcija. */
-  run(maxSteps: number = MAX_STEPS): StepResult {
+  /** Izvrsava program do kraja, breakpointa, greske ili dostignutog limita instrukcija. */
+  run({ breakpoints, maxSteps = MAX_STEPS }: RunOptions = {}): StepResult {
     for (let executed = 0; executed < maxSteps; executed++) {
       const result = this.step();
       if (result.status !== "ok") {
         return result;
+      }
+
+      // Provera ide tek posle izvrsenog koraka: inace bi Run, pokrenut sa zaustavljene
+      // instrukcije, odmah ponovo stao na istom mestu i nikad se ne bi pomerio.
+      const next = this.currentInstruction;
+      if (next !== null && breakpoints?.has(next.sourceLine)) {
+        return { status: "breakpoint", line: next.sourceLine };
       }
     }
 
