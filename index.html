@@ -6,32 +6,45 @@
     <title>RISC-V simulator</title>
     <link rel="stylesheet" href="/src/style.css" />
   </head>
-  <body>
-    <!-- PRIVREMENI UI (M3.5) - zamenjuje se pravim rasporedom u M6. -->
+  <body class="paleta-2">
     <div id="app">
       <h1>RISC-V simulator</h1>
 
-      <div class="kolone">
-        <div>
-          <h2>Kod</h2>
-          <textarea id="source" rows="12" cols="36" spellcheck="false"></textarea>
-          <div class="dugmad">
-            <button id="step">Step</button>
-            <button id="reset">Reset</button>
-          </div>
-          <pre id="status"></pre>
-          <pre id="errors" class="greske"></pre>
-        </div>
+      <div class="radna-povrsina">
+        <section class="panel panel-program">
+          <h2>PROGRAM</h2>
 
-        <div>
-          <h2>Izvrsavanje</h2>
-          <pre id="program"></pre>
-        </div>
+          <!-- Rezim pisanja: kod se menja. -->
+          <textarea id="editor" spellcheck="false"></textarea>
 
-        <div>
-          <h2>Registri</h2>
-          <pre id="registers"></pre>
-        </div>
+          <!-- Rezim izvrsavanja: isti kod, nepromenljiv, sa markerom i breakpointima. -->
+          <div id="listing" hidden></div>
+
+          <div id="errors" class="greske"></div>
+        </section>
+
+        <aside class="bocni-paneli">
+          <section class="panel">
+            <h2>REGISTRI</h2>
+            <div id="registers"></div>
+          </section>
+
+          <section class="panel">
+            <h2>MEMORIJA</h2>
+            <div id="memory"></div>
+          </section>
+        </aside>
+      </div>
+
+      <div class="traka">
+        <button id="assemble">Asembliraj</button>
+        <button id="edit">Izmeni</button>
+        <span class="razmak"></span>
+        <button id="step" disabled>Step</button>
+        <button id="run" disabled>Run</button>
+        <button id="reset" disabled>Reset</button>
+        <button id="breakpoint" disabled>Breakpoint</button>
+        <span id="status" class="status"></span>
       </div>
     </div>
 

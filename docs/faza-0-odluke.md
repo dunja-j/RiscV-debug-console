@@ -119,7 +119,9 @@ pc:        number           // kreće od 0, raste za 4; indeks instrukcije = pc 
 **Memorija**
 
 - Prikazuju se samo reči u koje je nešto upisivano (mokap: `0000: 00000008`).
-- Format: `AAAA: VVVVVVVV`, sortirano po adresi.
+- Format: `AAAA: VVVVVVVV` plus decimalna vrednost sa znakom, sortirano po adresi.
+  *(Izmenjeno u M6: dodato decimalno, radi doslednosti sa panelom registara — `FFFFFFFB`
+  je nečitljivo, `-5` nije.)*
 
 **Editor**
 

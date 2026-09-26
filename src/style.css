@@ -1,49 +1,180 @@
-/* Privremeni stilovi (M3.5) - pravi raspored po mokapu dolazi u M6. */
+/* Boje su izdvojene u promenljive, pa je zamena palete izmena jednog bloka.
+   Paleta se bira klasom na <body> u index.html: class="paleta-1" ili "paleta-2".
+   Izbor izmedju dve ponudjene se donosi pre zavrsetka rada; tada ostaje samo jedna. */
+
+.paleta-1 {
+  --pozadina: #1e1e1e;
+  --povrsina: #252526;
+  --ivica: #3c3c3c;
+  --tekst: #d4d4d4;
+  --prigusen: #808080;
+  --akcent: #ff79c6;
+  --akcent-tamni: #d16d9e;
+  --isticanje: #3a2733;
+  --greska: #ff5555;
+}
+
+.paleta-2 {
+  --pozadina: #1a1620;
+  --povrsina: #241d2b;
+  --ivica: #3b3145;
+  --tekst: #e6dfe9;
+  --prigusen: #8d8296;
+  --akcent: #f06292;
+  --akcent-tamni: #b8547a;
+  --isticanje: #3a2436;
+  --greska: #ff7676;
+}
 
 body {
   margin: 0;
   font-family: Consolas, "Courier New", monospace;
-  background: #1e1e1e;
-  color: #d4d4d4;
+  font-size: 14px;
+  background: var(--pozadina);
+  color: var(--tekst);
 }
 
 #app {
   padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 100vh;
+  box-sizing: border-box;
 }
 
 h1 {
-  font-size: 18px;
+  margin: 0;
+  font-size: 16px;
+  letter-spacing: 2px;
+  color: var(--akcent);
 }
 
 h2 {
-  font-size: 14px;
-  color: #9cdcfe;
+  margin: 0 0 8px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--akcent-tamni);
 }
 
-.kolone {
+/* Program zauzima najvise prostora; registri i memorija stoje sa strane. */
+.radna-povrsina {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 12px;
+  flex: 1;
+  min-height: 0;
+}
+
+.panel {
+  background: var(--povrsina);
+  border: 1px solid var(--ivica);
+  padding: 12px;
+  overflow: auto;
+}
+
+.panel-program {
   display: flex;
-  gap: 32px;
-  align-items: flex-start;
+  flex-direction: column;
+}
+
+.bocni-paneli {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 12px;
+  min-height: 0;
 }
 
 textarea {
+  flex: 1;
   font: inherit;
-  background: #252526;
-  color: #d4d4d4;
-  border: 1px solid #3c3c3c;
-  padding: 8px;
+  background: transparent;
+  color: var(--tekst);
+  border: none;
+  outline: none;
+  resize: none;
+  padding: 0;
 }
 
-.dugmad {
-  margin-top: 8px;
+/* Rezim izvrsavanja: red po red, sa mestom za breakpoint, marker i broj linije. */
+.linija {
+  display: grid;
+  grid-template-columns: 16px 12px 32px 1fr;
+  gap: 8px;
+  white-space: pre;
+}
+
+.linija.tekuca {
+  background: var(--isticanje);
+}
+
+.linija .marker {
+  color: var(--akcent);
+  font-weight: bold;
+}
+
+.linija .broj {
+  color: var(--prigusen);
+  text-align: right;
+}
+
+.vrednost {
+  display: grid;
+  grid-template-columns: 48px 80px 1fr;
+  gap: 8px;
+  white-space: pre;
+}
+
+.vrednost .ime {
+  color: var(--akcent-tamni);
+}
+
+.vrednost .dec {
+  color: var(--prigusen);
+  text-align: right;
+}
+
+.napomena {
+  color: var(--prigusen);
+  font-style: italic;
+}
+
+.traka {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.razmak {
+  width: 24px;
 }
 
 button {
   font: inherit;
-  margin-right: 8px;
-  padding: 4px 12px;
+  padding: 6px 14px;
+  background: var(--povrsina);
+  color: var(--tekst);
+  border: 1px solid var(--ivica);
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+  border-color: var(--akcent);
+  color: var(--akcent);
+}
+
+button:disabled {
+  color: var(--prigusen);
+  cursor: default;
+}
+
+.status {
+  margin-left: auto;
+  color: var(--prigusen);
 }
 
 .greske {
-  color: #f48771;
+  margin-top: 8px;
+  color: var(--greska);
+  white-space: pre-wrap;
 }
