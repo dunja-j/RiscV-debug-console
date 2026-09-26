@@ -40,10 +40,11 @@
         <button id="assemble">Asembliraj</button>
         <button id="edit">Izmeni</button>
         <span class="razmak"></span>
-        <button id="step" disabled>Step</button>
-        <button id="run" disabled>Run</button>
-        <button id="reset" disabled>Reset</button>
-        <button id="breakpoint" disabled>Breakpoint</button>
+        <!-- Znakovi su Unicode; &#xFE0E; trazi tekstualni prikaz umesto emodzija. -->
+        <button id="run" disabled><span class="ikona">&#x25B6;&#xFE0E;</span>Run</button>
+        <button id="step" disabled><span class="ikona">&#x2192;</span>Step</button>
+        <button id="reset" disabled><span class="ikona">&#x21BB;</span>Reset</button>
+        <button id="breakpoint" disabled><span class="ikona">&#x25CF;</span>Breakpoint</button>
         <span id="status" class="status"></span>
       </div>
     </div>

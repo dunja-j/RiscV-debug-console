@@ -150,26 +150,42 @@ textarea {
 }
 
 button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   font: inherit;
   padding: 6px 14px;
   background: var(--povrsina);
   color: var(--tekst);
-  border: 1px solid var(--ivica);
+  border: 1px solid var(--akcent-tamni);
   cursor: pointer;
+}
+
+.ikona {
+  color: var(--akcent);
+  font-size: 15px;
+  line-height: 1;
 }
 
 button:hover:not(:disabled) {
   border-color: var(--akcent);
   color: var(--akcent);
+  background: var(--isticanje);
 }
 
 button:disabled {
   color: var(--prigusen);
+  border-color: var(--ivica);
   cursor: default;
+}
+
+button:disabled .ikona {
+  color: var(--prigusen);
 }
 
 .status {
   margin-left: auto;
+  white-space: nowrap;
   color: var(--prigusen);
 }
 

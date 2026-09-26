@@ -39,7 +39,7 @@ let mode: Mode = "pisanje";
 let cpu: Cpu | null = null;
 
 editor.value = PRIMER;
-editor.addEventListener("input", checkCode);
+editor.addEventListener("input", onEdit);
 assembleButton.addEventListener("click", enterRunMode);
 editButton.addEventListener("click", enterEditMode);
 
@@ -51,7 +51,7 @@ function enterRunMode(): void {
   renderErrors(errorsPanel, result.errors);
 
   if (result.errors.length > 0) {
-    setStatus("kod ima gresaka - ispravi ih pre pokretanja");
+    setStatus(`gresaka u kodu: ${result.errors.length}`);
     return;
   }
 
@@ -64,15 +64,15 @@ function enterRunMode(): void {
 function enterEditMode(): void {
   cpu = null;
   mode = "pisanje";
-  checkCode();
+  renderErrors(errorsPanel, []);
+  setStatus("rezim pisanja");
   render();
 }
 
-/** Prijavljuje greske dok se kuca, ne menjajuci rezim. */
-function checkCode(): void {
-  const { errors } = assemble(editor.value);
-  renderErrors(errorsPanel, errors);
-  setStatus(errors.length === 0 ? "kod je ispravan" : `gresaka u kodu: ${errors.length}`);
+/** Izmena koda ponistava ranije prijavljene greske - vise se ne odnose na tekst u editoru. */
+function onEdit(): void {
+  renderErrors(errorsPanel, []);
+  setStatus("kod je izmenjen - pritisni Asembliraj");
 }
 
 function render(): void {
