@@ -1,99 +1,94 @@
 import { assemble } from "../core/assembler";
 import { Cpu } from "../core/cpu";
+import { renderErrors, renderListing, renderMemory, renderRegisters } from "./render";
 
-// PRIVREMENI UI (M3.5): textarea + Step + prikaz registara.
-// Sluzi samo da se rad simulatora vidi pre nego sto u M6 stigne pravi raspored.
+// Povezivanje UI-ja sa logikom iz core/. Ovaj modul drzi stanje ekrana
+// (rezim i ucitani procesor) i reaguje na dogadjaje; iscrtavanje je u render.ts.
+//
+// M6 pravi izgled i oba rezima; dugmad Step, Run, Reset i Breakpoint
+// dobijaju ponasanje u M7.
 
-const PRIMER = ["# saberi 5 i 7", "LI x1, 5", "LI x2, 7", "ADD x3, x1, x2", "MV x4, x3"].join("\n");
+const PRIMER = [
+  "# zbir brojeva od 1 do 5",
+  "LI x1, 0        # zbir",
+  "LI x2, 1        # brojac",
+  "LI x3, 6        # granica",
+  "",
+  "petlja:",
+  "ADD x1, x1, x2",
+  "ADDI x2, x2, 1",
+  "BLT x2, x3, petlja",
+  "",
+  "SW x1, 0(x0)    # rezultat u memoriju",
+].join("\n");
 
-const REGISTER_COUNT = 32;
+/** U rezimu pisanja kod se menja; u rezimu izvrsavanja je zakljucan. */
+type Mode = "pisanje" | "izvrsavanje";
 
-const sourceInput = element<HTMLTextAreaElement>("#source");
-const stepButton = element<HTMLButtonElement>("#step");
-const resetButton = element<HTMLButtonElement>("#reset");
+const editor = element<HTMLTextAreaElement>("#editor");
+const listing = element<HTMLElement>("#listing");
+const errorsPanel = element<HTMLElement>("#errors");
+const registersPanel = element<HTMLElement>("#registers");
+const memoryPanel = element<HTMLElement>("#memory");
 const statusOutput = element<HTMLElement>("#status");
-const errorsOutput = element<HTMLElement>("#errors");
-const programOutput = element<HTMLElement>("#program");
-const registersOutput = element<HTMLElement>("#registers");
 
-/** Procesor postoji tek kad se kod uspesno asemblira; izmena koda ga ponistava. */
+const assembleButton = element<HTMLButtonElement>("#assemble");
+const editButton = element<HTMLButtonElement>("#edit");
+
+let mode: Mode = "pisanje";
 let cpu: Cpu | null = null;
 
-sourceInput.value = PRIMER;
-sourceInput.addEventListener("input", reset);
-stepButton.addEventListener("click", step);
-resetButton.addEventListener("click", reset);
-reset();
+editor.value = PRIMER;
+editor.addEventListener("input", onEdit);
+assembleButton.addEventListener("click", enterRunMode);
+editButton.addEventListener("click", enterEditMode);
 
-function step(): void {
-  const running = cpu ?? loadProgram();
-  if (running === null) {
+enterEditMode();
+
+/** Asemblira kod i prelazi u rezim izvrsavanja; kod sa greskama ostaje u pisanju. */
+function enterRunMode(): void {
+  const result = assemble(editor.value);
+  renderErrors(errorsPanel, result.errors);
+
+  if (result.errors.length > 0) {
+    setStatus(`gresaka u kodu: ${result.errors.length}`);
     return;
   }
 
-  const result = running.step();
-  if (result.status === "halted") {
-    setStatus("program zavrsen");
-  } else if (result.status === "error") {
-    setStatus(`greska (linija ${result.line}): ${result.message}`);
-  } else {
-    setStatus(`izvrsena linija ${result.line}`);
-  }
-
+  cpu = new Cpu(result.program);
+  mode = "izvrsavanje";
+  setStatus("spremno za izvrsavanje");
   render();
 }
 
-function reset(): void {
+function enterEditMode(): void {
   cpu = null;
-  if (loadProgram() !== null) {
-    setStatus("spremno");
-  }
+  mode = "pisanje";
+  renderErrors(errorsPanel, []);
+  setStatus("rezim pisanja");
   render();
 }
 
-/** Asemblira kod iz editora; vraca null i ispisuje greske ako ih ima. */
-function loadProgram(): Cpu | null {
-  const { program, errors } = assemble(sourceInput.value);
-
-  if (errors.length > 0) {
-    errorsOutput.textContent = errors.map((e) => `Linija ${e.line}: ${e.message}`).join("\n");
-    setStatus("kod se ne moze asemblirati");
-    return null;
-  }
-
-  errorsOutput.textContent = "";
-  cpu = new Cpu(program);
-  return cpu;
+/** Izmena koda ponistava ranije prijavljene greske - vise se ne odnose na tekst u editoru. */
+function onEdit(): void {
+  renderErrors(errorsPanel, []);
+  setStatus("kod je izmenjen - pritisni Asembliraj");
 }
 
 function render(): void {
-  programOutput.textContent = renderProgram();
-  registersOutput.textContent = renderRegisters();
-}
+  const running = mode === "izvrsavanje";
 
-/** Izvorni kod sa markerom > na liniji koja se izvrsava sledeca. */
-function renderProgram(): string {
-  const currentLine = cpu?.currentInstruction?.sourceLine ?? null;
+  editor.hidden = running;
+  listing.hidden = !running;
+  assembleButton.disabled = running;
+  editButton.disabled = !running;
 
-  return sourceInput.value
-    .split("\n")
-    .map((text, index) => {
-      const marker = index + 1 === currentLine ? ">" : " ";
-      return `${marker} ${String(index + 1).padStart(2)} | ${text}`;
-    })
-    .join("\n");
-}
-
-function renderRegisters(): string {
-  const registers = cpu?.registers ?? new Int32Array(REGISTER_COUNT);
-
-  const rows: string[] = [];
-  for (let i = 0; i < REGISTER_COUNT; i++) {
-    const value = registers[i];
-    const hex = (value >>> 0).toString(16).toUpperCase().padStart(8, "0");
-    rows.push(`x${String(i).padEnd(2)} ${hex} ${String(value).padStart(12)}`);
+  if (running) {
+    renderListing(listing, editor.value, cpu?.currentInstruction?.sourceLine ?? null);
   }
-  return rows.join("\n");
+
+  renderRegisters(registersPanel, cpu);
+  renderMemory(memoryPanel, cpu);
 }
 
 function setStatus(text: string): void {

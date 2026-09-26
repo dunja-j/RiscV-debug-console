@@ -36,8 +36,8 @@ bez UI-ja, i po potrebi preneti u drugu vrstu aplikacije bez izmena.
 | **M3.5** | Privremeni mini UI | Textarea + dugme Step + ispis registara, bez stilizovanja | Program se vidi kako se izvršava u browseru | ✅ gotovo |
 | **M4** | Memorija | `LW, SW`, little-endian, provera poravnanja i opsega | Upis pa čitanje vraća istu vrednost; neporavnat pristup baca grešku | ✅ gotovo (10 testova) |
 | **M5** | Kontrola toka | `BEQ, BNE, BLT, JAL, JALR`, kraj programa, limit instrukcija; + beleženje korišćenih registara (za prikaz u M6) | Petlja koja broji do 10; poziv „funkcije" preko `JAL`/`RET` | ✅ gotovo (19 testova) |
-| **M6** | UI — prikaz | Dva režima (pisanje / izvršavanje) po `ui-zelje.md`, paneli REGISTRI i MEMORIJA, lista grešaka, roze paleta | Vizuelno odgovara mokapu; kucanje u editor prijavljuje greške uživo | ⬜ sledeće |
-| **M7** | Kontrole izvršavanja | Step, Run, Reset, Breakpoint; `>` marker; obeležavanje promenjenih registara | Ceo ciklus radi iz browsera; breakpoint zaustavlja Run | ⬜ |
+| **M6** | UI — prikaz | Dva režima (pisanje / izvršavanje) po `ui-zelje.md`, paneli REGISTRI i MEMORIJA, lista grešaka, roze paleta | Vizuelno odgovara mokapu; greške se prijavljuju pri asembliranju, sa brojem linije | ✅ gotovo |
+| **M7** | Kontrole izvršavanja | Step, Run, Reset, Breakpoint; `>` marker; obeležavanje promenjenih registara | Ceo ciklus radi iz browsera; breakpoint zaustavlja Run | ⬜ sledeće |
 | **M8** | Testiranje i poliranje | 3-4 primer-programa, ivični slučajevi, čišćenje i komentarisanje koda | Svi testovi prolaze, nema mrtvog koda | ⬜ |
 | **M9** | Priprema za odbranu | Objašnjenje arhitekture, dijagram toka, pregled odluka i obrazloženja | Projekat se može ispričati od početka do kraja bez gledanja u kod | ⬜ |
 
