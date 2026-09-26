@@ -9,21 +9,28 @@ import type { AsmError } from "../core/types";
 
 const WORD_SIZE = 4;
 
-/** Ispisuje kod sa brojevima linija, markerom tekuce instrukcije i mestom za breakpoint. */
+/** Ispisuje kod sa brojevima linija, markerom tekuce instrukcije i tackama breakpointa. */
 export function renderListing(
   container: HTMLElement,
   source: string,
   currentLine: number | null,
+  breakpoints: ReadonlySet<number>,
+  executableLines: ReadonlySet<number>,
 ): void {
   const rows = source.split("\n").map((text, index) => {
     const lineNumber = index + 1;
     const isCurrent = lineNumber === currentLine;
 
     const row = document.createElement("div");
-    row.className = isCurrent ? "linija tekuca" : "linija";
+    row.className = "linija";
+    row.classList.toggle("tekuca", isCurrent);
+    // Samo linije sa instrukcijom mogu da nose breakpoint.
+    row.classList.toggle("izvrsiva", executableLines.has(lineNumber));
+    // main.ts odavde cita na koju liniju se odnosi klik.
+    row.dataset.line = String(lineNumber);
 
     row.append(
-      cell("breakpoint", ""),
+      cell("breakpoint", breakpoints.has(lineNumber) ? "\u25CF" : ""),
       cell("marker", isCurrent ? ">" : ""),
       cell("broj", String(lineNumber)),
       cell("kod", text),
@@ -34,8 +41,12 @@ export function renderListing(
   container.replaceChildren(...rows);
 }
 
-/** Ispisuje samo registre u koje je pisano. */
-export function renderRegisters(container: HTMLElement, cpu: Cpu | null): void {
+/** Ispisuje samo registre u koje je pisano; `changed` se vizuelno istice. */
+export function renderRegisters(
+  container: HTMLElement,
+  cpu: Cpu | null,
+  changed: ReadonlySet<number>,
+): void {
   const used = cpu === null ? [] : [...cpu.usedRegisters].sort((a, b) => a - b);
 
   if (cpu === null || used.length === 0) {
@@ -43,7 +54,9 @@ export function renderRegisters(container: HTMLElement, cpu: Cpu | null): void {
     return;
   }
 
-  container.replaceChildren(...used.map((num) => valueRow(`x${num}`, cpu.registers[num])));
+  container.replaceChildren(
+    ...used.map((num) => valueRow(`x${num}`, cpu.registers[num], changed.has(num))),
+  );
 }
 
 /** Ispisuje samo reci memorije u koje je pisano. */
@@ -71,9 +84,10 @@ export function renderErrors(container: HTMLElement, errors: AsmError[]): void {
 }
 
 /** Red oblika: ime, heksadecimalna vrednost, decimalna vrednost sa znakom. */
-function valueRow(label: string, value: number): HTMLElement {
+function valueRow(label: string, value: number, highlighted = false): HTMLElement {
   const row = document.createElement("div");
   row.className = "vrednost";
+  row.classList.toggle("promenjen", highlighted);
   row.append(cell("ime", label), cell("hex", toHex(value, 8)), cell("dec", String(value)));
   return row;
 }

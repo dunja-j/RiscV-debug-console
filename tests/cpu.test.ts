@@ -315,7 +315,7 @@ describe("cpu - run i limit instrukcija", () => {
 
   it("run prekida beskonacnu petlju", () => {
     const cpu = cpuFor(["petlja:", "J petlja"].join("\n"));
-    const result = cpu.run(1000);
+    const result = cpu.run({ maxSteps: 1000 });
     expect(result.status).toBe("error");
     expect(result.message).toContain("beskonacna petlja");
   });
@@ -325,6 +325,32 @@ describe("cpu - run i limit instrukcija", () => {
     const result = cpu.run();
     expect(result.status).toBe("error");
     expect(result.message).toContain("poravnata");
+  });
+
+  it("run staje pred instrukcijom sa breakpointom", () => {
+    const cpu = cpuFor(["LI x1, 1", "LI x2, 2", "LI x3, 3"].join("\n"));
+    const result = cpu.run({ breakpoints: new Set([3]) });
+
+    expect(result.status).toBe("breakpoint");
+    expect(result.line).toBe(3);
+    // Instrukcija sa breakpointa jos nije izvrsena.
+    expect(cpu.registers[2]).toBe(2);
+    expect(cpu.registers[3]).toBe(0);
+  });
+
+  it("ponovni run sa zaustavljene instrukcije ide dalje", () => {
+    const cpu = cpuFor(["LI x1, 1", "LI x2, 2", "LI x3, 3"].join("\n"));
+    const breakpoints = new Set([2]);
+
+    expect(cpu.run({ breakpoints }).status).toBe("breakpoint");
+    // Bez izvrsavanja bar jednog koraka, Run bi ovde ponovo stao na istoj liniji.
+    expect(cpu.run({ breakpoints }).status).toBe("halted");
+    expect(cpu.registers[3]).toBe(3);
+  });
+
+  it("breakpoint na liniji koja se ne izvrsava nema efekta", () => {
+    const cpu = cpuFor(["# komentar", "LI x1, 1"].join("\n"));
+    expect(cpu.run({ breakpoints: new Set([1]) }).status).toBe("halted");
   });
 });
 
