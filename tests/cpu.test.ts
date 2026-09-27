@@ -111,6 +111,12 @@ describe("cpu - memorija", () => {
     expect(cpu.registers[1]).toBe(0);
   });
 
+  it("poslednja poravnata rec u memoriji je dostupna", () => {
+    const cpu = run(["LI x1, 2047", "LI x2, 77", "SW x2, 2045(x1)", "LW x3, 2045(x1)"].join("\n"));
+    expect(cpu.readWord(4092)).toBe(77);
+    expect(cpu.registers[3]).toBe(77);
+  });
+
   it("pamti adrese u koje je upisivano", () => {
     const cpu = run(["LI x1, 7", "SW x1, 0(x0)", "SW x1, 8(x0)"].join("\n"));
     expect([...cpu.writtenWords].sort((a, b) => a - b)).toEqual([0, 8]);
@@ -218,10 +224,20 @@ describe("cpu - grane", () => {
     expect(cpu.registers[2]).toBe(0);
   });
 
+  it("BNE ne skace kad su registri jednaki", () => {
+    const cpu = run(["BNE x0, x0, kraj", "LI x1, 99", "kraj:"].join("\n"));
+    expect(cpu.registers[1]).toBe(99);
+  });
+
   it("BLT poredi sa znakom", () => {
     // -1 < 1, iako bi kao brojevi bez znaka odnos bio obrnut.
     const cpu = run(["LI x1, -1", "LI x2, 1", "BLT x1, x2, kraj", "LI x3, 99", "kraj:"].join("\n"));
     expect(cpu.registers[3]).toBe(0);
+  });
+
+  it("BLT ne skace kad prvi registar nije manji", () => {
+    const cpu = run(["LI x1, 1", "LI x2, -1", "BLT x1, x2, kraj", "LI x3, 99", "kraj:"].join("\n"));
+    expect(cpu.registers[3]).toBe(99);
   });
 
   it("petlja broji do 10", () => {
@@ -283,6 +299,34 @@ describe("cpu - skokovi", () => {
     expect(cpu.registers[2]).toBe(8); // povratna adresa je instrukcija posle JALR
   });
 
+  it("JALR brise najnizi bit odredisne adrese", () => {
+    const cpu = cpuFor(["LI x1, 9", "JALR x2, 0(x1)", "NOP"].join("\n"));
+    cpu.step();
+    const result = cpu.step();
+
+    expect(result.status).toBe("ok");
+    expect(cpu.pc).toBe(8);
+  });
+
+  it("JALR racuna odrediste pre upisa kada su rd i rs1 isti", () => {
+    const cpu = cpuFor(["LI x1, 12", "JALR x1, 0(x1)", "NOP", "NOP"].join("\n"));
+    cpu.step();
+    cpu.step();
+
+    expect(cpu.pc).toBe(12);
+    expect(cpu.registers[1]).toBe(8);
+  });
+
+  it("neispravan JALR ne upisuje povratnu adresu", () => {
+    const cpu = cpuFor(["LI x1, 2", "LI x2, 7", "JALR x2, 0(x1)"].join("\n"));
+    cpu.step();
+    cpu.step();
+    const result = cpu.step();
+
+    expect(result.status).toBe("error");
+    expect(cpu.registers[2]).toBe(7);
+  });
+
   it("skok tacno iza poslednje instrukcije zavrsava program", () => {
     const cpu = cpuFor(["J kraj", "NOP", "kraj:"].join("\n"));
     expect(cpu.step().status).toBe("ok");
@@ -310,6 +354,12 @@ describe("cpu - run i limit instrukcija", () => {
   it("run izvrsava ceo program", () => {
     const cpu = cpuFor(["LI x1, 5", "LI x2, 7", "ADD x3, x1, x2"].join("\n"));
     expect(cpu.run().status).toBe("halted");
+    expect(cpu.registers[3]).toBe(12);
+  });
+
+  it("run prepoznaje kraj kada je izvrsio tacno maxSteps instrukcija", () => {
+    const cpu = cpuFor(["LI x1, 5", "LI x2, 7", "ADD x3, x1, x2"].join("\n"));
+    expect(cpu.run({ maxSteps: 3 }).status).toBe("halted");
     expect(cpu.registers[3]).toBe(12);
   });
 
@@ -346,6 +396,21 @@ describe("cpu - run i limit instrukcija", () => {
     // Bez izvrsavanja bar jednog koraka, Run bi ovde ponovo stao na istoj liniji.
     expect(cpu.run({ breakpoints }).status).toBe("halted");
     expect(cpu.registers[3]).toBe(3);
+  });
+
+  it("run izvrsava trenutnu instrukciju i kad je na njoj breakpoint", () => {
+    const cpu = cpuFor(["LI x1, 1", "LI x2, 2"].join("\n"));
+    expect(cpu.run({ breakpoints: new Set([1]) }).status).toBe("halted");
+    expect(cpu.registers[1]).toBe(1);
+  });
+
+  it("run nastavlja kad step dovede PC na instrukciju sa breakpointom", () => {
+    const cpu = cpuFor(["LI x1, 1", "LI x2, 2"].join("\n"));
+    expect(cpu.step().status).toBe("ok");
+    expect(cpu.pc).toBe(4);
+
+    expect(cpu.run({ breakpoints: new Set([2]) }).status).toBe("halted");
+    expect(cpu.registers[2]).toBe(2);
   });
 
   it("breakpoint na liniji koja se ne izvrsava nema efekta", () => {

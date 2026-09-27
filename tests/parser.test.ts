@@ -43,6 +43,16 @@ describe("parser - ispravan kod", () => {
     expect(result.lines[0].operands[0]).toEqual({ kind: "reg", num: 5 });
   });
 
+  it("prihvata poslednji registar x31", () => {
+    const result = parse("ADD x31, x0, x31");
+    expect(result.errors).toEqual([]);
+    expect(result.lines[0].operands).toEqual([
+      { kind: "reg", num: 31 },
+      { kind: "reg", num: 0 },
+      { kind: "reg", num: 31 },
+    ]);
+  });
+
   it("prihvata decimalne, negativne i heksadecimalne konstante", () => {
     const result = parse("ADDI x1, x0, 5\nADDI x2, x0, -3\nADDI x3, x0, 0x1F");
     expect(result.errors).toEqual([]);
@@ -74,6 +84,12 @@ describe("parser - ispravan kod", () => {
     expect(result.errors).toEqual([]);
     expect(result.lines[0].label).toBe("petlja");
     expect(result.lines[0].mnemonic).toBe("ADDI");
+  });
+
+  it("labela moze da sadrzi donju crtu i cifre posle prvog znaka", () => {
+    const result = parse("_petlja2: NOP");
+    expect(result.errors).toEqual([]);
+    expect(result.lines[0].label).toBe("_petlja2");
   });
 
   it("ime labele kao operand se prepoznaje kao labela", () => {
@@ -109,6 +125,13 @@ describe("parser - greske", () => {
     expect(result.errors).toHaveLength(1);
     expect(result.errors[0].line).toBe(1);
     expect(result.errors[0].message).toContain("x99");
+  });
+
+  it("prijavljuje nepostojeci bazni registar u memorijskom operandu", () => {
+    const result = parse("LW x1, 0(x32)");
+    expect(result.lines).toEqual([]);
+    expect(result.errors).toHaveLength(1);
+    expect(result.errors[0].message).toContain("x32");
   });
 
   it("prijavljuje labelu koja pocinje cifrom", () => {

@@ -23,6 +23,15 @@ describe("asembler - prave instrukcije", () => {
     expect(program[0]).toEqual({ op: "SW", rd: 0, rs1: 2, rs2: 3, imm: 8, sourceLine: 1 });
   });
 
+  it("prihvata granicne 12-bitne offsete", () => {
+    const { program, errors } = assemble(
+      ["LW x1, -2048(x2)", "SW x3, 2047(x4)", "JALR x5, -2048(x6)"].join("\n"),
+    );
+
+    expect(errors).toEqual([]);
+    expect(program.map((instruction) => instruction.imm)).toEqual([-2048, 2047, -2048]);
+  });
+
   it("preskace linije sa samo labelom i cuva broj izvorne linije", () => {
     const { program } = assemble("start:\n\nADD x1, x2, x3");
     expect(program).toHaveLength(1);
@@ -96,6 +105,20 @@ describe("asembler - labele i pomeraji", () => {
     const { labels } = assemble("NOP\npetlja: ADDI x1, x1, 1");
     expect(labels.get("petlja")).toBe(4);
   });
+
+  it("prihvata krajnje dostizne pomeraje grane", () => {
+    const backward = assemble(
+      ["pocetak:", ...Array(1024).fill("NOP"), "BEQ x0, x0, pocetak"].join("\n"),
+    );
+    const forward = assemble(
+      ["BEQ x0, x0, kraj", ...Array(1022).fill("NOP"), "kraj:"].join("\n"),
+    );
+
+    expect(backward.errors).toEqual([]);
+    expect(backward.program.at(-1)?.imm).toBe(-4096);
+    expect(forward.errors).toEqual([]);
+    expect(forward.program[0].imm).toBe(4092);
+  });
 });
 
 describe("asembler - greske", () => {
@@ -134,6 +157,15 @@ describe("asembler - greske", () => {
     expect(errors[0].message).toContain("van opsega");
   });
 
+  it("prijavljuje offset van 12-bitnog opsega za sve memorijske formate", () => {
+    const { errors } = assemble(
+      ["LW x1, -2049(x2)", "SW x3, 2048(x4)", "JALR x5, 2048(x6)"].join("\n"),
+    );
+
+    expect(errors.map((error) => error.line)).toEqual([1, 2, 3]);
+    expect(errors.every((error) => error.message.includes("van opsega"))).toBe(true);
+  });
+
   it("granicne vrednosti konstante prolaze", () => {
     const { errors } = assemble("ADDI x1, x0, 2047\nADDI x2, x0, -2048");
     expect(errors).toEqual([]);
@@ -146,11 +178,19 @@ describe("asembler - greske", () => {
   });
 
   it("prijavljuje predaleku granu", () => {
-    // Grana nosi najvise 13 bita sa znakom = +-4096 bajtova = +-1024 instrukcije.
-    const source = ["pocetak:", ...Array(1100).fill("NOP"), "BEQ x1, x0, pocetak"].join("\n");
+    // Pozitivan pomeraj od 4096 je prvi nedostizan visekratnik od 4.
+    const source = ["BEQ x1, x0, kraj", ...Array(1023).fill("NOP"), "kraj:"].join("\n");
     const { errors } = assemble(source);
     expect(errors).toHaveLength(1);
     expect(errors[0].message).toContain("van opsega");
+  });
+
+  it("pogresna instrukcija i dalje zauzima adresu pri racunanju labela", () => {
+    const { program, labels, errors } = assemble("MULT x1, x2, x3\ncilj: NOP");
+
+    expect(errors).toHaveLength(1);
+    expect(labels.get("cilj")).toBe(4);
+    expect(program[0].sourceLine).toBe(2);
   });
 
   it("skuplja vise semantickih gresaka odjednom", () => {

@@ -1,20 +1,5 @@
-/* Boje su izdvojene u promenljive, pa je zamena palete izmena jednog bloka.
-   Paleta se bira klasom na <body> u index.html: class="paleta-1" ili "paleta-2".
-   Izbor izmedju dve ponudjene se donosi pre zavrsetka rada; tada ostaje samo jedna. */
-
-.paleta-1 {
-  --pozadina: #1e1e1e;
-  --povrsina: #252526;
-  --ivica: #3c3c3c;
-  --tekst: #d4d4d4;
-  --prigusen: #808080;
-  --akcent: #ff79c6;
-  --akcent-tamni: #d16d9e;
-  --isticanje: #3a2733;
-  --greska: #ff5555;
-}
-
-.paleta-2 {
+/* Boje su izdvojene u promenljive da bi pravila za izgled ostala pregledna. */
+:root {
   --pozadina: #1a1620;
   --povrsina: #241d2b;
   --ivica: #3b3145;
@@ -55,6 +40,35 @@ h2 {
   font-size: 12px;
   letter-spacing: 1px;
   color: var(--akcent-tamni);
+}
+
+.panel-zaglavlje {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.panel-zaglavlje h2 {
+  margin: 0;
+}
+
+.panel-zaglavlje select {
+  max-width: 240px;
+  font: inherit;
+  padding: 3px 8px;
+  background: var(--pozadina);
+  color: var(--tekst);
+  border: 1px solid var(--ivica);
+}
+
+.panel-zaglavlje select:focus {
+  outline: 1px solid var(--akcent);
+}
+
+.panel-zaglavlje select:disabled {
+  color: var(--prigusen);
 }
 
 /* Program zauzima najvise prostora; registri i memorija stoje sa strane. */

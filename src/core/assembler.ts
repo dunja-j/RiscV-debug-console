@@ -129,14 +129,17 @@ function assembleLine(
     return null;
   }
 
-  const mnemonic = expanded.mnemonic as string;
-  const spec = (SPECS as Record<string, Spec | undefined>)[mnemonic];
-  if (spec === undefined) {
+  const mnemonic = expanded.mnemonic;
+  if (mnemonic === null || !isOpCode(mnemonic)) {
     errors.push({ line: line.sourceLine, message: `nepoznata instrukcija '${line.mnemonic}'` });
     return null;
   }
 
-  return buildInstruction(mnemonic as OpCode, spec, expanded, address, labels, errors);
+  return buildInstruction(mnemonic, SPECS[mnemonic], expanded, address, labels, errors);
+}
+
+function isOpCode(mnemonic: string): mnemonic is OpCode {
+  return Object.hasOwn(SPECS, mnemonic);
 }
 
 /**
@@ -147,10 +150,10 @@ function assembleLine(
 function expandPseudo(line: ParsedLine, errors: AsmError[]): ParsedLine | null {
   const ops = line.operands;
 
-  const wrongShape = (): null => {
+  const wrongShape = (syntax: string): null => {
     errors.push({
       line: line.sourceLine,
-      message: `${line.mnemonic} ocekuje: ${PSEUDO_SYNTAX[line.mnemonic as string]}`,
+      message: `${line.mnemonic} ocekuje: ${syntax}`,
     });
     return null;
   };
@@ -163,23 +166,27 @@ function expandPseudo(line: ParsedLine, errors: AsmError[]): ParsedLine | null {
 
   switch (line.mnemonic) {
     case "LI":
-      if (ops.length !== 2 || ops[0].kind !== "reg" || ops[1].kind !== "imm") return wrongShape();
+      if (ops.length !== 2 || ops[0].kind !== "reg" || ops[1].kind !== "imm") {
+        return wrongShape(PSEUDO_SYNTAX.LI);
+      }
       return rewrite("ADDI", [ops[0], ZERO, ops[1]]);
 
     case "MV":
-      if (ops.length !== 2 || ops[0].kind !== "reg" || ops[1].kind !== "reg") return wrongShape();
+      if (ops.length !== 2 || ops[0].kind !== "reg" || ops[1].kind !== "reg") {
+        return wrongShape(PSEUDO_SYNTAX.MV);
+      }
       return rewrite("ADDI", [ops[0], ops[1], { kind: "imm", value: 0 }]);
 
     case "NOP":
-      if (ops.length !== 0) return wrongShape();
+      if (ops.length !== 0) return wrongShape(PSEUDO_SYNTAX.NOP);
       return rewrite("ADDI", [ZERO, ZERO, { kind: "imm", value: 0 }]);
 
     case "J":
-      if (ops.length !== 1 || ops[0].kind !== "label") return wrongShape();
+      if (ops.length !== 1 || ops[0].kind !== "label") return wrongShape(PSEUDO_SYNTAX.J);
       return rewrite("JAL", [ZERO, ops[0]]);
 
     case "RET":
-      if (ops.length !== 0) return wrongShape();
+      if (ops.length !== 0) return wrongShape(PSEUDO_SYNTAX.RET);
       return rewrite("JALR", [ZERO, { kind: "mem", offset: 0, base: 1 }]);
 
     default:

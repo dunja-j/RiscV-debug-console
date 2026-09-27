@@ -107,10 +107,11 @@ export class Cpu {
         return result;
       }
 
-      // Provera ide tek posle izvrsenog koraka: inace bi Run, pokrenut sa zaustavljene
-      // instrukcije, odmah ponovo stao na istom mestu i nikad se ne bi pomerio.
       const next = this.currentInstruction;
-      if (next !== null && breakpoints?.has(next.sourceLine)) {
+      if (next === null) {
+        return { status: "halted" };
+      }
+      if (breakpoints?.has(next.sourceLine)) {
         return { status: "breakpoint", line: next.sourceLine };
       }
     }

@@ -52,12 +52,9 @@ ne postoji.
 
 ## Boje i dugmad
 
-Ponuđene su dve palete, bira se pred kraj rada:
-
-- **paleta-1** — neutralno tamno sivo (`#1e1e1e`), živ roze akcent `#ff79c6`
-- **paleta-2** — pozadina sa ljubičastim podtonom (`#1a1620`), mekši roze `#f06292`
-
-Menjaju se klasom na `<body>` u `index.html`.
+Tokom M6 ponuđene su dve palete. U M8 je kao konačna izabrana paleta sa ljubičastim
+podtonom (`#1a1620`) i mekšim roze akcentom (`#f06292`). Probna neutralno siva paleta i
+klase za prebacivanje uklonjene su iz konačnog koda.
 
 Dugmad prate mokap: redosled `Run, Step, Reset, Breakpoint` i znakovi `▶ → ↻ ●`. Znak je u
 punom akcentu, ivica u prigušenom akcentu, a na prelaz mišem se oboje pojačavaju — tako se

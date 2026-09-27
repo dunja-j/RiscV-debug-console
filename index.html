@@ -6,13 +6,18 @@
     <title>RISC-V simulator</title>
     <link rel="stylesheet" href="/src/style.css" />
   </head>
-  <body class="paleta-2">
+  <body>
     <div id="app">
       <h1>RISC-V simulator</h1>
 
       <div class="radna-povrsina">
         <section class="panel panel-program">
-          <h2>PROGRAM</h2>
+          <div class="panel-zaglavlje">
+            <h2>PROGRAM</h2>
+            <select id="example" aria-label="Izaberi primer programa">
+              <option value="">Izaberi primer...</option>
+            </select>
+          </div>
 
           <!-- Rezim pisanja: kod se menja. -->
           <textarea id="editor" spellcheck="false"></textarea>
