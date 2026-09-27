@@ -81,6 +81,7 @@ function enterEditMode(): void {
   cpu = null;
   mode = "pisanje";
   finished = false;
+  executableLines = new Set();
   changedRegisters = new Set();
   // Izmenom koda se brojevi linija pomeraju, pa bi breakpointi zavrsili na pogresnim mestima.
   breakpoints.clear();

@@ -7,7 +7,7 @@ uz Step, Run, breakpointe i prikaz registara i memorije.
 
 Za pokretanje su potrebni:
 
-- [Node.js](https://nodejs.org/) verzija **20.19 ili novija**, odnosno **22.12 ili novija**;
+- [Node.js](https://nodejs.org/) verzija **20.19+ iz serije 20** ili **22.12+**;
 - `npm`, koji se instalira zajedno sa Node.js-om;
 - moderan web pregledač.
 

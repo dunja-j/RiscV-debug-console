@@ -1,4 +1,4 @@
-export interface ProgramExample {
+interface ProgramExample {
   id: string;
   name: string;
   source: string;
