@@ -56,7 +56,8 @@ Pokazati:
 - panel PROGRAM;
 - panele REGISTRI i MEMORIJA;
 - dugmad Asembliraj, Run, Step, Reset i Breakpoint;
-- padajući meni sa primerima.
+- padajući meni sa novim projektom i primerima;
+- dugme Dokumentacija sa formatima podržanih instrukcija.
 
 Predlog šta reći:
 

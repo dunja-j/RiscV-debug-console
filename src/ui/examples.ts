@@ -6,6 +6,11 @@ interface ProgramExample {
 
 export const PROGRAM_EXAMPLES: readonly ProgramExample[] = [
   {
+    id: "novi",
+    name: "Novi projekat",
+    source: "#novi projekat",
+  },
+  {
     id: "zbir",
     name: "Zbir brojeva 1-5",
     source: [

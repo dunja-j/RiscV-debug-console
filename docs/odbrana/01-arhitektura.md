@@ -36,7 +36,8 @@ flowchart LR
 | CPU | [`src/core/cpu.ts`](../../src/core/cpu.ts) | čuva registre, memoriju i PC i izvršava instrukcije |
 | UI kontroler | [`src/ui/main.ts`](../../src/ui/main.ts) | čuva stanje ekrana i reaguje na akcije korisnika |
 | Iscrtavanje | [`src/ui/render.ts`](../../src/ui/render.ts) | prikazuje program, registre, memoriju i greške |
-| Primer-programi | [`src/ui/examples.ts`](../../src/ui/examples.ts) | sadrži četiri programa dostupna iz padajućeg menija |
+| Predlozi programa | [`src/ui/examples.ts`](../../src/ui/examples.ts) | sadrži novi projekat i četiri gotova primera |
+| Dokumentacija instrukcija | [`src/ui/documentation.ts`](../../src/ui/documentation.ts) | iscrtava modal sa formatima i kratkim opisima instrukcija |
 | Izgled | [`src/style.css`](../../src/style.css) | raspored, boje i vizuelna stanja elemenata |
 
 ## Glavni tok podataka

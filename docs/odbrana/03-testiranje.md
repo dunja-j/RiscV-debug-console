@@ -393,8 +393,10 @@ UI nema poseban automatizovani test paket. Ručno su provereni:
 8. Izmeni i brisanje starog izvršnog stanja;
 9. isticanje promenjenih registara;
 10. prikaz upisanih memorijskih reči;
-11. učitavanje sva četiri primer-programa;
-12. zaključavanje menija primera u režimu izvršavanja.
+11. početni prazan projekat i učitavanje sva četiri primer-programa;
+12. zaključavanje menija primera u režimu izvršavanja;
+13. otvaranje dokumentacije u oba režima i zatvaranje dugmetom ili tasterom `Escape`;
+14. prikaz svih 15 pravih i 5 pseudo-instrukcija.
 
 Za svaki ugrađeni primer provereno je i konačno stanje:
 
@@ -439,7 +441,9 @@ specifikaciji i rizičnim mestima implementacije.
 > prelivanje, little-endian raspored bajtova, poravnanje memorije, skokove, `x0`, limit
 > instrukcija i breakpointe. M8 pregled je konkretno otkrio da je program koji se završava
 > tačno na `maxSteps` pogrešno prijavljivan kao beskonačna petlja. UI je zbog malog obima
-> proveren ručno kroz kompletan korisnički tok i sva četiri ugrađena primera.
+> proveren ručno kroz kompletan korisnički tok i sva četiri ugrađena primera. Početni
+> prazan projekat i ugrađena dokumentacija naknadno su dodati prema povratnoj informaciji
+> mentora i provereni u browseru.
 
 ## Moguća pitanja komisije
 

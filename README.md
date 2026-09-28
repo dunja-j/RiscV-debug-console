@@ -43,8 +43,10 @@ koristi. Server se zaustavlja kombinacijom `Ctrl+C`.
 
 ## Korišćenje
 
-U editoru napišite program ili izaberite jedan od četiri ugrađena primera, a zatim
-pritisnite **Asembliraj**. Ako je kod ispravan, aplikacija prelazi u režim izvršavanja.
+Podrazumevani **Novi projekat** sadrži samo početni komentar za pisanje sopstvenog programa.
+Iz padajućeg menija mogu se učitati i četiri gotova primera. Nakon unosa ili izbora
+programa pritisnite **Asembliraj**. Ako je kod ispravan, aplikacija prelazi u režim
+izvršavanja.
 
 | Kontrola | Funkcija |
 |---|---|
@@ -57,6 +59,9 @@ pritisnite **Asembliraj**. Ako je kod ispravan, aplikacija prelazi u režim izvr
 Breakpoint se može postaviti i klikom na izvršivu liniju. Marker `>` označava sledeću
 instrukciju. Ako je program već zaustavljen na breakpointu, Run izvršava tu instrukciju i
 nastavlja dalje.
+
+Dugme **Dokumentacija** otvara kratak pregled formata svih podržanih pravih i
+pseudo-instrukcija. Prozor se zatvara dugmetom **Zatvori** ili tasterom `Escape`.
 
 Paneli sa strane prikazuju korišćene registre i upisane memorijske reči, heksadecimalno i
 decimalno. Promene poslednje akcije su istaknute. Simulator ima 4 KB little-endian memorije;

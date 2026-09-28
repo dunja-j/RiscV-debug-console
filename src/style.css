@@ -54,6 +54,12 @@ h2 {
   margin: 0;
 }
 
+.program-kontrole {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .panel-zaglavlje select {
   max-width: 240px;
   font: inherit;
@@ -69,6 +75,10 @@ h2 {
 
 .panel-zaglavlje select:disabled {
   color: var(--prigusen);
+}
+
+.program-kontrole button {
+  padding: 3px 10px;
 }
 
 /* Program zauzima najvise prostora; registri i memorija stoje sa strane. */
@@ -230,4 +240,103 @@ button:disabled .ikona {
   margin-top: 8px;
   color: var(--greska);
   white-space: pre-wrap;
+}
+
+dialog {
+  width: min(900px, calc(100vw - 48px));
+  max-height: calc(100vh - 48px);
+  box-sizing: border-box;
+  padding: 16px;
+  overflow: auto;
+  color: var(--tekst);
+  background: var(--povrsina);
+  border: 1px solid var(--akcent-tamni);
+}
+
+dialog::backdrop {
+  background: rgb(0 0 0 / 70%);
+}
+
+.dokumentacija-zaglavlje {
+  position: sticky;
+  top: -16px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: -16px -16px 12px;
+  padding: 12px 16px;
+  background: var(--povrsina);
+  border-bottom: 1px solid var(--ivica);
+}
+
+.dokumentacija-zaglavlje h2 {
+  margin: 0;
+  font-size: 14px;
+}
+
+#documentation-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+#documentation-content h3 {
+  margin: 0 0 8px;
+  font-size: 12px;
+  color: var(--akcent-tamni);
+}
+
+#documentation-content table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#documentation-content th,
+#documentation-content td {
+  padding: 6px 8px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--ivica);
+}
+
+#documentation-content th {
+  color: var(--akcent);
+}
+
+#documentation-content th:first-child,
+#documentation-content td:first-child {
+  width: 90px;
+}
+
+#documentation-content th:nth-child(2),
+#documentation-content td:nth-child(2) {
+  width: 220px;
+}
+
+#documentation-content code {
+  color: var(--tekst);
+  white-space: nowrap;
+}
+
+.dokumentacija-napomena {
+  margin: 0;
+  color: var(--prigusen);
+}
+
+@media (max-width: 720px) {
+  .panel-zaglavlje {
+    align-items: flex-start;
+  }
+
+  .program-kontrole {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  #documentation-content th:nth-child(2),
+  #documentation-content td:nth-child(2) {
+    width: auto;
+  }
 }
