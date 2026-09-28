@@ -1,5 +1,12 @@
 # Kontekst projekta: RISC-V asembler i simulator (diplomski rad)
 
+## Pisanje teksta diplomskog rada
+
+Pre planiranja, pisanja ili formatiranja diplomskog rada obavezno pročitaj
+[pravila za diplomski rad](diplomski-rad-uputstva.md). Ona beleže pravila
+priloženog Word šablona i dogovor sa korisnicom o njegovoj prednosti nad
+dopunskim PDF uputstvom. Ne pisati poglavlja pre dogovora o sadržaju.
+
 Ovaj fajl je kontekst za GitHub Copilot (ili bilo kog AI asistenta) koji mi pomaže da napravim diplomski rad. Pre pisanja ijedne linije koda, pročitaj ovo u celosti i drži ga se tokom celog rada na projektu.
 
 ## O meni i projektu
