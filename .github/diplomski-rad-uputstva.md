@@ -27,15 +27,23 @@
 ## Trenutno stanje pisanja
 
 - Rad se piše poglavlje po poglavlje, uz pregled korisnice pre nastavka.
-- Pripremljena je prva radna verzija uvoda; korisnica još nije odobrila tekst.
+- Korisnica je 28.09.2026. odobrila uvod. Ne menjati njegov tekst bez dogovora.
+- Pripremljena je radna verzija drugog poglavlja, sa sva četiri dogovorena
+  potpoglavlja i tabelom poređenja. Korisnica je prihvatila sadržaj uz
+  konkretne jezičke primedbe, uključujući povezane izmene u uvodu.
+  Zatražene jezičke izmene primenjene su u oba poglavlja i proverene u PDF-u.
 - Glavni dokument: [Diplomski-rad.docx](../docs/diplomski-rad/Diplomski-rad.docx).
 - Pregled za čitanje: [Diplomski-rad.pdf](../docs/diplomski-rad/Diplomski-rad.pdf).
-- Dokument trenutno sadrži samo uvod i korišćenu referencu. Naslovna strana,
-  sadržaj i naredna poglavlja još nisu uneti; primeri i instrukcioni tekst
+- Dokument trenutno sadrži uvod, pregled postojećih rešenja i pet referenci.
+  Naslovna strana, sadržaj i poglavlja 3–8 još nisu uneti; primeri i instrukcioni tekst
   originalnog šablona nisu deo radne verzije.
-- Uvod ima 873 reči. Prelom je proveren izvozom iz Microsoft Word-a:
-  dve strane uvoda numerisane sa 1 i 2 i zasebna nenumerisana strana referenci.
+- Posle jezičkih izmena prelom je ponovo proveren izvozom iz Microsoft Word-a:
+  uvod zauzima strane 1–2, drugo poglavlje strane 3–5, a reference su na
+  zasebnoj nenumerisanoj šestoj strani. U uvodu su dozvoljene samo
+  zatražene jezičke izmene, bez promene sadržaja.
   To nije provera obima celog budućeg rada.
+- Tabela 1 je u celini na strani 5, u formatu tabele preuzetom iz šablona,
+  sa natpisom iznad i automatskom unakrsnom referencom u prethodnom pasusu.
 - Definicije stilova, numeracije, teme i fontova preuzete su bez izmene
   iz originalnog šablona. Sačuvani su format stranice, margine i odvojene
   sekcije za glavni tekst i reference. Originalni šablon nije menjan.
@@ -44,6 +52,14 @@
   izdanje 20260120, odeljak Introduction: RISC-V ISA Overview,
   https://docs.riscv.org/reference/isa/v20260120/unpriv/intro.html
   (pristupljeno 28.09.2026.).
+- Izvori drugog poglavlja, pristupljeno 28.09.2026.:
+  [2] https://github.com/TheThirdOne/rars;
+  [3] https://github.com/TheThirdOne/rars/blob/master/src/help/Debugging.html;
+  [4] https://github.com/kvakil/venus;
+  [5] https://venus.kvakil.me/.
+  Pregled obuhvata izvorni kvakil/venus i njegovu veb aplikaciju, ne druge
+  izvedene verzije. Poređenje je dokumentaciono, bez tvrdnji o izmerenoj
+  brzini, usaglašenosti sa standardom ili tome koliko alat pomaže u učenju.
 - Pri nastavku prvo pročitati postojeći Word dokument i uključiti eventualne
   korisničke izmene; ne prepisivati ga slepo iz ranijih radnih izvora.
 
@@ -208,6 +224,9 @@ u novi prazan dokument. Original sačuvati neizmenjen.
 - Svaki objekat pomenuti i referisati u tekstu neposredno pre njegovog prikaza.
 - Tabele postavljati bez uvlačenja, u punoj raspoloživoj širini teksta.
   Natpis je IZNAD tabele.
+- Korisnica je zatražila vizuelni razmak između tabele i narednog teksta.
+  Koristiti 6 pt razmaka pre prvog pasusa posle tabele, bez praznih pasusa
+  i bez menjanja definicija postojećih stilova.
 - Slike i grafikone postavljati u neuvučen red, horizontalno centrirano;
   šablon navodi širinu do 80% širine stranice. Ne prelaziti prostor između
   margina. Natpis je ISPOD slike ili grafikona.
@@ -222,6 +241,30 @@ u novi prazan dokument. Original sačuvati neizmenjen.
 - Ne ubacivati objekte samo radi dekoracije ili povećavanja broja strana.
 
 ## Literatura i akademski stil
+
+### Jezičke smernice potvrđene posle pregleda teksta
+
+- Korisnica želi prirodan, jasan i stručan srpski, a ne rečenice koje zvuče
+  kao doslovan prevod sa engleskog. Primenjivati ovu smernicu pri pisanju
+  i pri završnom čitanju svakog narednog poglavlja.
+- Prednost dati konkretnom opisu radnje i ulozi korisnika: npr.
+  „Na kartici Editor korisnik piše program”, umesto apstraktnog
+  „Interfejs razdvaja unos programa u prikazu Editor”.
+- Koristiti „bitski”, „bitska”, „bitske”, „bitskih” i odgovarajuće oblike,
+  ne „bitovski” i njegove oblike. Ovo važi i za tekst, natpise i tabele.
+- Izbegavati izraze „obrazovni učinak” i „obrazovno uspešniji”.
+  Prema smislu rečenice pisati „koliko alat pomaže u učenju”,
+  „da li korisnicima olakšava razumevanje gradiva” ili drugi prirodan izraz.
+  Ne menjati tehničko značenje niti tvrditi korist koja nije ispitana.
+- Povezane brojčane podatke pisati dosledno, prvenstveno ciframa:
+  „15 instrukcija i 5 pseudo-instrukcija”, ne mešati „15” i „pet”
+  u istom nabrajanju. To nije zahtev da se svi brojevi u prozi pišu ciframa.
+- Preferirati „način pokretanja alata” kada se opisuje kako se alat pokreće.
+  Stručni izraz „razvojno okruženje” zadržati tamo gde je zaista potreban.
+- Ostatak prihvaćenog teksta ne prepravljati nepotrebno; iste jezičke
+  primedbe primeniti dosledno na sva njihova pojavljivanja u radu.
+
+### Citiranje i organizacija izlaganja
 
 - Izvore navoditi brojevima u uglastim zagradama: [1], [2-4], [5] [7].
   Reference numerisati arapskim brojevima od 1.
