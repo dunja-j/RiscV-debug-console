@@ -39,7 +39,7 @@ bez UI-ja, i po potrebi preneti u drugu vrstu aplikacije bez izmena.
 | **M6** | UI — prikaz | Dva režima (pisanje / izvršavanje) po `ui-zelje.md`, paneli REGISTRI i MEMORIJA, lista grešaka, roze paleta | Vizuelno odgovara mokapu; greške se prijavljuju pri asembliranju, sa brojem linije | ✅ gotovo |
 | **M7** | Kontrole izvršavanja | Step, Run, Reset, Breakpoint; `>` marker; obeležavanje promenjenih registara | Ceo ciklus radi iz browsera; breakpoint zaustavlja Run | ✅ gotovo (3 nova testa + ručna provera) |
 | **M8** | Testiranje i poliranje | 3-4 primer-programa, ivični slučajevi, čišćenje i komentarisanje koda | Svi testovi prolaze, nema mrtvog koda | ✅ gotovo (113 testova + ručna provera) |
-| **M9** | Priprema za odbranu | Objašnjenje arhitekture, dijagram toka, pregled odluka i obrazloženja | Projekat se može ispričati od početka do kraja bez gledanja u kod | ⬜ sledeće |
+| **M9** | Priprema za odbranu | Objašnjenje arhitekture, dijagram toka, pregled odluka i obrazloženja | Projekat se može ispričati od početka do kraja bez gledanja u kod | ✅ gotovo |
 
 M3.5 je dodat naknadno na zahtev — privremeni UI posle M3, da se rad simulatora vidi ranije
 nego što stigne pravi UI u M6. Deo tog koda se svesno baca u M6.
