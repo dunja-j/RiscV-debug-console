@@ -28,22 +28,28 @@
 
 - Rad se piše poglavlje po poglavlje, uz pregled korisnice pre nastavka.
 - Korisnica je 28.09.2026. odobrila uvod. Ne menjati njegov tekst bez dogovora.
-- Pripremljena je radna verzija drugog poglavlja, sa sva četiri dogovorena
-  potpoglavlja i tabelom poređenja. Korisnica je prihvatila sadržaj uz
-  konkretne jezičke primedbe, uključujući povezane izmene u uvodu.
-  Zatražene jezičke izmene primenjene su u oba poglavlja i proverene u PDF-u.
+- Korisnica je odobrila drugo poglavlje posle jezičkih izmena i dodavanja
+  razmaka posle tabele. Prva dva poglavlja ne menjati bez novog dogovora.
+- Na naknadni zahtev korisnice naslov 2.4 promenjen je u
+  „Poređenje sa razvijenim simulatorom”; sadržaj odeljka nije menjan.
+- Korisnica je prihvatila treće poglavlje uz dve jezičke primedbe:
+  precizirati izraz za osnovni skup instrukcija i zameniti pominjanje
+  elektronskog kola opisom hardverske realizacije procesora.
 - Glavni dokument: [Diplomski-rad.docx](../docs/diplomski-rad/Diplomski-rad.docx).
 - Pregled za čitanje: [Diplomski-rad.pdf](../docs/diplomski-rad/Diplomski-rad.pdf).
-- Dokument trenutno sadrži uvod, pregled postojećih rešenja i pet referenci.
-  Naslovna strana, sadržaj i poglavlja 3–8 još nisu uneti; primeri i instrukcioni tekst
+- Dokument trenutno sadrži prva tri poglavlja i 6 referenci.
+  Naslovna strana, sadržaj i poglavlja 4–8 još nisu uneti; primeri i instrukcioni tekst
   originalnog šablona nisu deo radne verzije.
-- Posle jezičkih izmena prelom je ponovo proveren izvozom iz Microsoft Word-a:
-  uvod zauzima strane 1–2, drugo poglavlje strane 3–5, a reference su na
-  zasebnoj nenumerisanoj šestoj strani. U uvodu su dozvoljene samo
-  zatražene jezičke izmene, bez promene sadržaja.
+- Posle dodavanja trećeg poglavlja prelom je proveren u Microsoft Word-u:
+  uvod zauzima strane 1–2, drugo poglavlje strane 3–5, treće poglavlje
+  strane 6–8, a reference su na zasebnoj nenumerisanoj devetoj strani.
+  Prva dva poglavlja sačuvana su, uz naknadno zatraženu izmenu naslova 2.4.
   To nije provera obima celog budućeg rada.
 - Tabela 1 je u celini na strani 5, u formatu tabele preuzetom iz šablona,
   sa natpisom iznad i automatskom unakrsnom referencom u prethodnom pasusu.
+- Tabela 2 (5 pseudo-instrukcija i njihovi prevodi) cela je na strani 7,
+  sa automatskim natpisom i unakrsnom referencom. Obe tabele imaju 6 pt
+  razmaka pre narednog pasusa.
 - Definicije stilova, numeracije, teme i fontova preuzete su bez izmene
   iz originalnog šablona. Sačuvani su format stranice, margine i odvojene
   sekcije za glavni tekst i reference. Originalni šablon nije menjan.
@@ -60,6 +66,15 @@
   Pregled obuhvata izvorni kvakil/venus i njegovu veb aplikaciju, ne druge
   izvedene verzije. Poređenje je dokumentaciono, bez tvrdnji o izmerenoj
   brzini, usaglašenosti sa standardom ili tome koliko alat pomaže u učenju.
+- Treće poglavlje koristi i izvor [6]: RISC-V International,
+  The RISC-V Instruction Set Manual, Volume I: Unprivileged Architecture,
+  izdanje 20260120, RV32I Base Integer Instruction Set, Version 2.1,
+  https://docs.riscv.org/reference/isa/v20260120/unpriv/rv32.html
+  (pristupljeno 28.09.2026.). Provereni su registri, instrukcije, redosled
+  bajtova i pravila poravnanja; numerički primeri dodatno su proračunati.
+- Treće poglavlje jasno odvaja RISC-V specifikaciju od izbora simulatora:
+  4096 bajtova, little-endian, obavezno poravnanje LW/SW, odvojen program,
+  interna reprezentacija i ograničenje LI na opseg od -2048 do 2047.
 - Pri nastavku prvo pročitati postojeći Word dokument i uključiti eventualne
   korisničke izmene; ne prepisivati ga slepo iz ranijih radnih izvora.
 
@@ -100,7 +115,7 @@ Stvarni obim zavisi od preloma u originalnim Word stilovima.
 - 2.1. Kriterijumi izbora i poređenja
 - 2.2. RARS
 - 2.3. Venus
-- 2.4. Uporedni pregled i pozicioniranje razvijenog rešenja
+- 2.4. Poređenje sa razvijenim simulatorom
 
 Porediti proverene mogućnosti i namenu, bez neosnovanih tvrdnji da je
 razvijeni simulator bolji od postojećih alata.
@@ -261,6 +276,10 @@ u novi prazan dokument. Original sačuvati neizmenjen.
   u istom nabrajanju. To nije zahtev da se svi brojevi u prozi pišu ciframa.
 - Preferirati „način pokretanja alata” kada se opisuje kako se alat pokreće.
   Stručni izraz „razvojno okruženje” zadržati tamo gde je zaista potreban.
+- Pri objašnjavanju osnovnog skupa koristiti jasan izraz „osnovni skup
+  instrukcija za rad sa celim brojevima”, ne neodređeno „osnovni celobrojni
+  skup”. Kada se ISA razlikuje od implementacije, govoriti o načinu na koji
+  je procesor hardverski realizovan, a ne o „konkretnom elektronskom kolu”.
 - Ostatak prihvaćenog teksta ne prepravljati nepotrebno; iste jezičke
   primedbe primeniti dosledno na sva njihova pojavljivanja u radu.
 
