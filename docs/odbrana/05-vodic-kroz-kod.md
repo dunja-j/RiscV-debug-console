@@ -11,6 +11,8 @@ svaku liniju. Najbolji redosled je:
 4. [`src/core/cpu.ts`](../../src/core/cpu.ts) — instrukcija menja stanje procesora;
 5. [`src/ui/main.ts`](../../src/ui/main.ts) — korisničke akcije pozivaju core;
 6. [`src/ui/render.ts`](../../src/ui/render.ts) — stanje se prikazuje u browseru.
+7. [`src/ui/documentation.ts`](../../src/ui/documentation.ts) — prikazuje kratku referencu
+   instrukcija.
 
 Ovaj redosled prati stvarni tok podataka i zato je lakši za objašnjavanje od redosleda
 kojim su fajlovi nastajali.
@@ -732,8 +734,8 @@ finished
 
 ## Inicijalizacija
 
-Opcije padajućeg menija nastaju iz `PROGRAM_EXAMPLES`. Prvi primer se upisuje u editor, a
-svako dugme dobija jedan event listener.
+Opcije padajućeg menija nastaju iz `PROGRAM_EXAMPLES`. Prvi predlog je Novi projekat i
+upisuje se u editor, a svako dugme dobija jedan event listener.
 
 Na kraju se poziva `enterEditMode`, pa početno stanje prolazi kroz istu logiku kao svaki
 kasniji povratak u editor.
@@ -773,7 +775,7 @@ Funkcija pronalazi primer po ID-u, menja vrednost editora i poziva `onEdit`.
 
 Zatim:
 
-- vraća padajući meni na početnu opciju;
+- zadržava izabrani predlog prikazan u meniju;
 - fokusira editor;
 - postavlja kursor na početak;
 - vraća skrol na vrh.
@@ -928,6 +930,18 @@ umesto `-1`.
 > Render funkcije su čiste u smislu odgovornosti: dobijaju trenutno stanje i iz njega
 > ponovo prave sadržaj panela. Ne znaju šta je korisnik kliknuo i ne izvršavaju instrukcije.
 > Korisnički tekst svuda postavljaju pomoću `textContent`.
+
+## Dokumentacija instrukcija
+
+Fajl [`src/ui/documentation.ts`](../../src/ui/documentation.ts) predstavlja malu samostalnu
+UI komponentu. Sadrži podatke o 15 pravih i 5 pseudo-instrukcija i od njih pravi dve tabele
+u HTML `<dialog>` elementu.
+
+Komponenta dobija dijalog, dugme za otvaranje i kontejner za sadržaj. Ne zna ništa o CPU
+stanju, pa je dokumentacija dostupna i u režimu pisanja i u režimu izvršavanja.
+
+Sav tekst se upisuje pomoću `textContent`. Dijalog se zatvara ugrađenim dugmetom ili
+tasterom `Escape`.
 
 ---
 

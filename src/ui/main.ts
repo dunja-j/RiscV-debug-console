@@ -1,6 +1,7 @@
 import { assemble } from "../core/assembler";
 import { Cpu } from "../core/cpu";
 import type { StepResult } from "../core/cpu";
+import { initializeDocumentation } from "./documentation";
 import { PROGRAM_EXAMPLES } from "./examples";
 import { renderErrors, renderListing, renderMemory, renderRegisters } from "./render";
 
@@ -13,6 +14,9 @@ type Mode = "pisanje" | "izvrsavanje";
 
 const editor = element<HTMLTextAreaElement>("#editor");
 const exampleSelect = element<HTMLSelectElement>("#example");
+const documentationDialog = element<HTMLDialogElement>("#documentation");
+const documentationButton = element<HTMLButtonElement>("#open-documentation");
+const documentationContent = element<HTMLElement>("#documentation-content");
 const listing = element<HTMLElement>("#listing");
 const errorsPanel = element<HTMLElement>("#errors");
 const registersPanel = element<HTMLElement>("#registers");
@@ -45,7 +49,9 @@ for (const example of PROGRAM_EXAMPLES) {
   exampleSelect.append(option);
 }
 
+initializeDocumentation(documentationDialog, documentationButton, documentationContent);
 editor.value = PROGRAM_EXAMPLES[0].source;
+exampleSelect.value = PROGRAM_EXAMPLES[0].id;
 editor.addEventListener("input", onEdit);
 exampleSelect.addEventListener("change", onExampleSelected);
 assembleButton.addEventListener("click", enterRunMode);
@@ -101,9 +107,8 @@ function onExampleSelected(): void {
   if (example === undefined) {
     return;
   }
-
   editor.value = example.source;
-  exampleSelect.value = "";
+  editor.value = example.source;
   onEdit();
   editor.focus();
   editor.setSelectionRange(0, 0);

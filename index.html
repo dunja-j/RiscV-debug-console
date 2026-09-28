@@ -14,9 +14,10 @@
         <section class="panel panel-program">
           <div class="panel-zaglavlje">
             <h2>PROGRAM</h2>
-            <select id="example" aria-label="Izaberi primer programa">
-              <option value="">Izaberi primer...</option>
-            </select>
+            <div class="program-kontrole">
+              <select id="example" aria-label="Izaberi primer programa"></select>
+              <button id="open-documentation" type="button">Dokumentacija</button>
+            </div>
           </div>
 
           <!-- Rezim pisanja: kod se menja. -->
@@ -53,6 +54,16 @@
         <span id="status" class="status"></span>
       </div>
     </div>
+
+    <dialog id="documentation" aria-labelledby="documentation-title">
+      <div class="dokumentacija-zaglavlje">
+        <h2 id="documentation-title">RISC-V instrukcije</h2>
+        <form method="dialog">
+          <button type="submit" aria-label="Zatvori dokumentaciju">Zatvori</button>
+        </form>
+      </div>
+      <div id="documentation-content"></div>
+    </dialog>
 
     <script type="module" src="/src/ui/main.ts"></script>
   </body>
