@@ -42,24 +42,32 @@
 - Korisnica je odobrila peto poglavlje nakon pojašnjenja izraza za prikaz
   izvornog koda i promene reda reči u „imena labela se ne menjaju”.
   Prvih pet poglavlja ne menjati bez novog dogovora.
-- Pripremljeno je šesto poglavlje sa svih pet dogovorenih potpoglavlja
-  i 5 stvarnih snimaka aplikacije; čeka pregled korisnice.
+- Korisnica je odobrila šesto poglavlje bez primedbi. Prvih šest poglavlja
+  ne menjati bez novog dogovora.
+- Pripremljeno je sedmo poglavlje sa svih pet dogovorenih potpoglavlja,
+  tabelom stvarnih rezultata testova i isečkom regresionog testa. Korisnica
+  je prihvatila sadržaj uz zamenu izraza „snimci” izrazom „slike” u odeljku 7.4.
 - Glavni dokument: [Diplomski-rad.docx](../docs/diplomski-rad/Diplomski-rad.docx).
 - Pregled za čitanje: [Diplomski-rad.pdf](../docs/diplomski-rad/Diplomski-rad.pdf).
-- Dokument trenutno sadrži prvih šest poglavlja i 11 referenci.
-  Naslovna strana, sadržaj i poglavlja 7–8 još nisu uneti; primeri i instrukcioni tekst
+- Dokument trenutno sadrži prvih sedam poglavlja i 12 referenci.
+  Naslovna strana, sadržaj i osmo poglavlje još nisu uneti; primeri i instrukcioni tekst
   originalnog šablona nisu deo radne verzije.
-- Posle dodavanja šestog poglavlja prelom je proveren u Microsoft Word-u:
+- Posle dodavanja sedmog poglavlja prelom je proveren u Microsoft Word-u:
   uvod zauzima strane 1–2, drugo poglavlje strane 3–5, treće poglavlje
   strane 6–8, četvrto poglavlje strane 9–10, peto poglavlje strane 11–18,
-  šesto poglavlje strane 19–22, a reference su na zasebnoj nenumerisanoj
-  dvadeset trećoj strani. Odobrene strane 1–18 provereno su neizmenjene.
+  šesto poglavlje strane 19–22, sedmo poglavlje strane 23–25, a reference
+  su na zasebnoj nenumerisanoj dvadeset šestoj strani.
+  Odobrene strane 1–22 provereno su neizmenjene.
   To nije provera obima celog budućeg rada.
 - Tabela 1 je u celini na strani 5, u formatu tabele preuzetom iz šablona,
   sa natpisom iznad i automatskom unakrsnom referencom u prethodnom pasusu.
 - Tabela 2 (5 pseudo-instrukcija i njihovi prevodi) cela je na strani 7,
   sa automatskim natpisom i unakrsnom referencom. Obe tabele imaju 6 pt
   razmaka pre narednog pasusa.
+- Tabela 3 sa rezultatima testova cela je na strani 25. Sadrži podatke iz
+  stvarnog Vitest izveštaja: parser 24, asembler 31, CPU 58, ukupno 113;
+  svi uspešni, bez neuspešnih i preskočenih testova. I posle ove tabele
+  sačuvan je razmak od 6 pt pre narednog pasusa.
 - Slika 1 je na strani 12, Slika 2 na strani 13. Originalni dijagrami:
   [arhitektura.png](../docs/diplomski-rad/slike/arhitektura.png) i
   [tok-asembliranja.png](../docs/diplomski-rad/slike/tok-asembliranja.png).
@@ -76,6 +84,9 @@
   Kod je tekst u okviru preuzetom iz Word šablona, stilom Kod;
   svaki kompletan isečak provereno je na jednoj strani.
   Slike i kod imaju natpise ispod i automatske unakrsne reference u tekstu.
+- Segment izvornog koda 5 na strani 24 preuzet je iz postojećeg testa
+  završetka programa tačno na granici maxSteps. Ceo isečak je na jednoj strani,
+  kao tekst u okviru sa stilom Kod, uz natpis ispod i unakrsnu referencu.
 - Definicije stilova, numeracije, teme i fontova preuzete su bez izmene
   iz originalnog šablona. Sačuvani su format stranice, margine i odvojene
   sekcije za glavni tekst i reference. Originalni šablon nije menjan.
@@ -131,6 +142,17 @@
   aplikaciju u pisanju; zaseban program LI x1, 15 / SW x1, 2(x0) prijavljuje
   neporavnatu adresu 0x002 u drugoj liniji bez upisa u memoriju.
   Proveren je i dijalog Dokumentacija sa zatvaranjem tasterom Escape.
+- Za sedmo poglavlje 29.09.2026. ponovo su pokrenuti svi postojeći testovi:
+  113/113 uspešnih u 3 datoteke, potvrđeno i strukturiranim JSON izveštajem
+  sačuvanim u sesijskim artefaktima. Uspešna je i komanda npm run build,
+  uključujući njenu TypeScript proveru tsc --noEmit.
+  Okruženje: Windows, Node.js 24.19.0, npm 11.17.0, TypeScript 7.0.2,
+  Vite 8.3.0 i Vitest 5.0.0. Izvorni kod aplikacije i testovi nisu menjani.
+- Izvor [12]: Playwright, Playwright Library, dokumentacija za Python,
+  https://playwright.dev/python/docs/library (pristupljeno 29.09.2026.).
+  Sedmo poglavlje razdvaja postojeće Vitest testove, vizuelni pregled i pomoćnu
+  automatizaciju scenarija za snimke. Ne tvrdi izmerenu pokrivenost koda,
+  poređenje performansi ili dokazan doprinos učenju.
 - Pri nastavku prvo pročitati postojeći Word dokument i uključiti eventualne
   korisničke izmene; ne prepisivati ga slepo iz ranijih radnih izvora.
 
@@ -350,6 +372,9 @@ u novi prazan dokument. Original sačuvati neizmenjen.
   U režimu izvršavanja taj prikaz ne može da se uređuje.
 - U odgovarajućoj rečenici koristiti prirodniji red reči „imena labela
   se ne menjaju”, umesto „imena labela ne menjaju se”.
+- Pri upućivanju na ilustracije u radu koristiti „slike”, dosledno
+  natpisima „Slika 1”, „Slika 2” itd. „Snimak ekrana” je ispravan izraz
+  za način nastanka slike, ali samostalno „snimak” može da asocira na video.
 - Ostatak prihvaćenog teksta ne prepravljati nepotrebno; iste jezičke
   primedbe primeniti dosledno na sva njihova pojavljivanja u radu.
 
@@ -382,8 +407,9 @@ u novi prazan dokument. Original sačuvati neizmenjen.
 - Jasno razlikovati podskup RV32I od potpune implementacije standarda,
   internu reprezentaciju od binarnog mašinskog koda i model izvršavanja
   instrukcija od simulacije mikroarhitekture.
-- Broj od 113 testova potiče iz postojeće dokumentacije; ponovo proveriti
-  aktuelne rezultate pre navođenja kao rezultata završnog rada.
+- Broj od 113 testova potvrđen je stvarnim pokretanjem 29.09.2026.
+  Ako se kod ili testovi promene, ponovo proveriti aktuelne rezultate
+  pre navođenja kao rezultata završnog rada.
 - Funkcionalna ispravnost, pokrivenost koda, brzina i obrazovna korisnost
   nisu ista stvar. Ne tvrditi izmerenu pokrivenost, performanse ili
   poboljšanje učenja ako takva evaluacija nije sprovedena.
