@@ -32,18 +32,22 @@
   razmaka posle tabele. Prva dva poglavlja ne menjati bez novog dogovora.
 - Na naknadni zahtev korisnice naslov 2.4 promenjen je u
   „Poređenje sa razvijenim simulatorom”; sadržaj odeljka nije menjan.
-- Korisnica je prihvatila treće poglavlje uz dve jezičke primedbe:
-  precizirati izraz za osnovni skup instrukcija i zameniti pominjanje
-  elektronskog kola opisom hardverske realizacije procesora.
+- Korisnica je odobrila treće poglavlje nakon preciziranja izraza za osnovni
+  skup instrukcija i zamene pominjanja elektronskog kola opisom hardverske
+  realizacije procesora. Prva tri poglavlja ne menjati bez novog dogovora.
+- Korisnica je 29.09.2026. prihvatila sadržaj četvrtog poglavlja uz zahteve
+  da se objasni opcija strict, prirodnije poveže rečenica o CSS klasama i
+  pojasni razlika između pripreme aplikacije i obrade unetog RISC-V programa.
+  Izmene su primenjene i proverene u PDF-u; poglavlje i dalje zauzima strane 9–10.
 - Glavni dokument: [Diplomski-rad.docx](../docs/diplomski-rad/Diplomski-rad.docx).
 - Pregled za čitanje: [Diplomski-rad.pdf](../docs/diplomski-rad/Diplomski-rad.pdf).
-- Dokument trenutno sadrži prva tri poglavlja i 6 referenci.
-  Naslovna strana, sadržaj i poglavlja 4–8 još nisu uneti; primeri i instrukcioni tekst
+- Dokument trenutno sadrži prva četiri poglavlja i 10 referenci.
+  Naslovna strana, sadržaj i poglavlja 5–8 još nisu uneti; primeri i instrukcioni tekst
   originalnog šablona nisu deo radne verzije.
-- Posle dodavanja trećeg poglavlja prelom je proveren u Microsoft Word-u:
+- Posle dodavanja četvrtog poglavlja prelom je proveren u Microsoft Word-u:
   uvod zauzima strane 1–2, drugo poglavlje strane 3–5, treće poglavlje
-  strane 6–8, a reference su na zasebnoj nenumerisanoj devetoj strani.
-  Prva dva poglavlja sačuvana su, uz naknadno zatraženu izmenu naslova 2.4.
+  strane 6–8, četvrto poglavlje strane 9–10, a reference su na zasebnoj
+  nenumerisanoj jedanaestoj strani. Odobrene strane 1–8 provereno su neizmenjene.
   To nije provera obima celog budućeg rada.
 - Tabela 1 je u celini na strani 5, u formatu tabele preuzetom iz šablona,
   sa natpisom iznad i automatskom unakrsnom referencom u prethodnom pasusu.
@@ -75,6 +79,17 @@
 - Treće poglavlje jasno odvaja RISC-V specifikaciju od izbora simulatora:
   4096 bajtova, little-endian, obavezno poravnanje LW/SW, odvojen program,
   interna reprezentacija i ograničenje LI na opseg od -2048 do 2047.
+- Izvori četvrtog poglavlja, pristupljeno 28.09.2026.:
+  [7] https://www.typescriptlang.org/docs/handbook/2/basic-types.html;
+  [8] https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model;
+  [9] https://vite.dev/guide/features.html;
+  [10] https://vitest.dev/guide/.
+  Uloge alata i razlozi izbora provereni su prema konfiguraciji, kodu,
+  razvojnim odlukama i dokumentaciji. Nisu navedene neproverene verzije alata
+  ni novi rezultati testiranja.
+- Četvrto poglavlje razlikuje prevođenje TypeScript-a u JavaScript, statičku
+  proveru tipova, testove ponašanja i asembliranje korisničkog RISC-V programa.
+  Vite sam ne proverava tipove; projektna build komanda prvo pokreće tsc --noEmit.
 - Pri nastavku prvo pročitati postojeći Word dokument i uključiti eventualne
   korisničke izmene; ne prepisivati ga slepo iz ranijih radnih izvora.
 
@@ -280,6 +295,13 @@ u novi prazan dokument. Original sačuvati neizmenjen.
   instrukcija za rad sa celim brojevima”, ne neodređeno „osnovni celobrojni
   skup”. Kada se ISA razlikuje od implementacije, govoriti o načinu na koji
   je procesor hardverski realizovan, a ne o „konkretnom elektronskom kolu”.
+- Podešavanja poput strict pri prvom pominjanju objasniti kroz njihovu
+  svrhu: to je opcija za strožu proveru TypeScript tipova tokom razvoja,
+  a ne režim rada simulatora.
+- Kada se govori o prevođenju, jasno navesti koji se kod obrađuje:
+  Vite prevodi TypeScript kod aplikacije u JavaScript; asembler u već
+  pokrenutoj aplikaciji obrađuje RISC-V tekst unet u editor. Korisnički
+  program se asemblira i simulira u pregledaču, ne na Vite serveru.
 - Ostatak prihvaćenog teksta ne prepravljati nepotrebno; iste jezičke
   primedbe primeniti dosledno na sva njihova pojavljivanja u radu.
 
