@@ -38,22 +38,40 @@
 - Korisnica je 29.09.2026. prihvatila sadržaj četvrtog poglavlja uz zahteve
   da se objasni opcija strict, prirodnije poveže rečenica o CSS klasama i
   pojasni razlika između pripreme aplikacije i obrade unetog RISC-V programa.
-  Izmene su primenjene i proverene u PDF-u; poglavlje i dalje zauzima strane 9–10.
+  Izmene su primenjene, proverene i odobrene; poglavlje zauzima strane 9–10.
+- Pripremljeno je peto poglavlje sa svih osam dogovorenih potpoglavlja,
+  2 originalna dijagrama i 4 isečka stvarnog koda. Korisnica je prihvatila
+  sadržaj uz zahtev da se pojasni izraz listing i ispravi red reči u
+  „imena labela se ne menjaju”. Ranija pominjanja prikaza koda uskladiti
+  sa tim pojašnjenjem; ostali tekst ne menjati. Izmene su primenjene
+  i proverene u Word dokumentu i PDF-u.
 - Glavni dokument: [Diplomski-rad.docx](../docs/diplomski-rad/Diplomski-rad.docx).
 - Pregled za čitanje: [Diplomski-rad.pdf](../docs/diplomski-rad/Diplomski-rad.pdf).
-- Dokument trenutno sadrži prva četiri poglavlja i 10 referenci.
-  Naslovna strana, sadržaj i poglavlja 5–8 još nisu uneti; primeri i instrukcioni tekst
+- Dokument trenutno sadrži prvih pet poglavlja i 11 referenci.
+  Naslovna strana, sadržaj i poglavlja 6–8 još nisu uneti; primeri i instrukcioni tekst
   originalnog šablona nisu deo radne verzije.
-- Posle dodavanja četvrtog poglavlja prelom je proveren u Microsoft Word-u:
+- Posle dodavanja petog poglavlja prelom je proveren u Microsoft Word-u:
   uvod zauzima strane 1–2, drugo poglavlje strane 3–5, treće poglavlje
-  strane 6–8, četvrto poglavlje strane 9–10, a reference su na zasebnoj
-  nenumerisanoj jedanaestoj strani. Odobrene strane 1–8 provereno su neizmenjene.
+  strane 6–8, četvrto poglavlje strane 9–10, peto poglavlje strane 11–18,
+  a reference su na zasebnoj nenumerisanoj devetnaestoj strani.
+  Prva četiri poglavlja sačuvana su, osim naknadno zatraženog usklađivanja
+  izraza za prikaz koda u drugom i četvrtom poglavlju.
   To nije provera obima celog budućeg rada.
 - Tabela 1 je u celini na strani 5, u formatu tabele preuzetom iz šablona,
   sa natpisom iznad i automatskom unakrsnom referencom u prethodnom pasusu.
 - Tabela 2 (5 pseudo-instrukcija i njihovi prevodi) cela je na strani 7,
   sa automatskim natpisom i unakrsnom referencom. Obe tabele imaju 6 pt
   razmaka pre narednog pasusa.
+- Slika 1 je na strani 12, Slika 2 na strani 13. Originalni dijagrami:
+  [arhitektura.png](../docs/diplomski-rad/slike/arhitektura.png) i
+  [tok-asembliranja.png](../docs/diplomski-rad/slike/tok-asembliranja.png).
+  Centrirani su, široki najviše 80% prostora za tekst i imaju proverenu
+  efektivnu rezoluciju oko 887 dpi.
+- Segmenti izvornog koda 1–4 nalaze se redom na stranama 14–17:
+  tip Instruction, funkcija assemble, deo metode step i petlja metode run.
+  Kod je tekst u okviru preuzetom iz Word šablona, stilom Kod;
+  svaki kompletan isečak provereno je na jednoj strani.
+  Slike i kod imaju natpise ispod i automatske unakrsne reference u tekstu.
 - Definicije stilova, numeracije, teme i fontova preuzete su bez izmene
   iz originalnog šablona. Sačuvani su format stranice, margine i odvojene
   sekcije za glavni tekst i reference. Originalni šablon nije menjan.
@@ -90,6 +108,13 @@
 - Četvrto poglavlje razlikuje prevođenje TypeScript-a u JavaScript, statičku
   proveru tipova, testove ponašanja i asembliranje korisničkog RISC-V programa.
   Vite sam ne proverava tipove; projektna build komanda prvo pokreće tsc --noEmit.
+- Izvor [11], dodat u petom poglavlju: MDN Web Docs, JavaScript typed arrays,
+  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Typed_arrays
+  (pristupljeno 29.09.2026.).
+- Peto poglavlje opisuje stvarno ponašanje, čak i kada stariji dnevnici
+  daju pojednostavljen opis: Run poredi registre pre i posle cele akcije,
+  ne ističe svaku međupromenu; Step posle uspešne poslednje instrukcije
+  vraća ok, a naredni poziv halted; Reset ne asemblira ponovo program.
 - Pri nastavku prvo pročitati postojeći Word dokument i uključiti eventualne
   korisničke izmene; ne prepisivati ga slepo iz ranijih radnih izvora.
 
@@ -302,6 +327,13 @@ u novi prazan dokument. Original sačuvati neizmenjen.
   Vite prevodi TypeScript kod aplikacije u JavaScript; asembler u već
   pokrenutoj aplikaciji obrađuje RISC-V tekst unet u editor. Korisnički
   program se asemblira i simulira u pregledaču, ne na Vite serveru.
+- Umesto neobjašnjenog termina listing koristiti „prikaz izvornog koda”
+  ili „prikaz programa”, prema kontekstu. To je prikaz celog koda po redovima,
+  ne jedna linija niti samo lista izvršivih instrukcija; naš prikaz sadrži
+  i komentare i labele, brojeve linija, marker i tačke prekida.
+  U režimu izvršavanja taj prikaz ne može da se uređuje.
+- U odgovarajućoj rečenici koristiti prirodniji red reči „imena labela
+  se ne menjaju”, umesto „imena labela ne menjaju se”.
 - Ostatak prihvaćenog teksta ne prepravljati nepotrebno; iste jezičke
   primedbe primeniti dosledno na sva njihova pojavljivanja u radu.
 
