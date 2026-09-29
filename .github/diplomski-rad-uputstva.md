@@ -19,10 +19,13 @@
   Nazive tehnologija, instrukcije i identifikatore iz koda pisati u izvornom
   obliku. Objašnjenja pisati na srpskom; nazive konkretnih kontrola aplikacije
   navoditi onako kako se prikazuju u interfejsu.
-- Konačan naslov, podaci za naslovnu stranu i uključivanje zahvalnice
-  još nisu dogovoreni. Ne preuzimati imena, zvanja i godinu iz primera šablona.
-  Ovi podaci ne blokiraju pripremu glavnog teksta, ali moraju biti razrešeni
-  pre završne verzije dokumenta.
+- Potvrđeni podaci za naslovnu stranu:
+  - Dunja Janković 2020/0058;
+  - Razvoj interaktivnog asemblera i simulatora podskupa RISC-V instrukcija;
+  - mentor: doc. dr Uroš Radenković;
+  - Beograd, 2026.
+- Korisnica je izričito odlučila da rad nema zahvalnicu.
+  Ne dodavati je niti preuzimati podatke iz primera šablona.
 
 ## Trenutno stanje pisanja
 
@@ -46,25 +49,45 @@
   ne menjati bez novog dogovora.
 - Korisnica je odobrila sedmo poglavlje posle zamene izraza „snimci”
   izrazom „slike” u odeljku 7.4. Prvih sedam poglavlja ne menjati bez dogovora.
-- Pripremljen je zaključak (osmo poglavlje); čeka pregled korisnice.
-  Obuhvata ostvarene ciljeve, izazove, rezultate provere, ograničenja i
-  jasno označene predloge budućeg razvoja, bez novih neproverenih rezultata.
+- Korisnica je odobrila zaključak. Svih osam poglavlja je odobreno;
+  sadržinske izmene ponovo dogovarati sa korisnicom.
+- Korisnica je odobrila i naslovnu stranu i sadržaj. Završna zatražena
+  tipografska izmena primenjena je: engleski termini i nazivi kontrola
+  označeni su kurzivom, bez dodatnog naglašavanja naziva tehnologija.
+  Tekst, kod, slike, oznake instrukcija i registara, datoteke i URL-adrese
+  ostali su neizmenjeni.
 - Glavni dokument: [Diplomski-rad.docx](../docs/diplomski-rad/Diplomski-rad.docx).
 - Pregled za čitanje: [Diplomski-rad.pdf](../docs/diplomski-rad/Diplomski-rad.pdf).
-- Dokument trenutno sadrži svih osam poglavlja i 12 referenci.
-  Naslovna strana i automatski sadržaj još nisu uneti; primeri i instrukcioni
-  tekst originalnog šablona nisu deo radne verzije.
-- Posle dodavanja zaključka prelom je proveren u Microsoft Word-u:
+- Dokument sadrži naslovnu stranu, automatski sadržaj, svih osam poglavlja
+  i 12 referenci, bez zahvalnice. Naslovna je preuzeta iz latinične varijante
+  Word šablona, sa njegovim grbom, stilovima i rasporedom; zamenjeni su podaci.
+- Sadržaj ima 38 stavki na dve nenumerisane strane. To je pravo Word polje
+  TOC sa postojećim stilovima toc 1–3, sačuvanim prikazom rezultata,
+  automatskim referencama na strane i klikabilnim vezama ka naslovima.
+  Provereni su svi brojevi strana i svih 38 veza u PDF-u.
+- Posle dodavanja naslovne i sadržaja numeracija glavnog teksta ostaje:
   uvod zauzima strane 1–2, drugo poglavlje strane 3–5, treće poglavlje
   strane 6–8, četvrto poglavlje strane 9–10, peto poglavlje strane 11–18,
   šesto poglavlje strane 19–22, sedmo poglavlje strane 23–25, zaključak
-  strane 26–27, a reference su na zasebnoj nenumerisanoj dvadeset osmoj strani.
-  Odobrene strane 1–25 provereno su neizmenjene.
+  strane 26–27. Odobreni glavni tekst i tekst referenci sačuvani su u celosti;
+  pri dodavanju početnih sekcija promenio se prelom dela uvoda između strana 1 i 2,
+  bez izmene teksta, stilova ili početnih strana poglavlja.
   Glavni tekst ima 27 numerisanih strana i ispunjava mentorov minimum od 25.
-- Preostalo je: pregled i odobrenje zaključka, potvrda tačnog naslova i
-  podataka za naslovnu stranu, odluka o opcionoj zahvalnici, izrada naslovne
-  strane i automatskog sadržaja, pa završna jezička i tehnička provera.
-  Ne smatrati dokument spremnim za predaju dok se ovi koraci ne završe.
+- PDF ima ukupno 31 fizičku stranu: naslovna 1, sadržaj 2–3, glavni tekst 4–30
+  (odštampana numeracija 1–27), reference 31 bez broja strane.
+  Za otvaranje odštampane strane N pomoću PDF parametra #page koristiti N+3.
+- Posle primene kurziva provereni su neizmenjen sadržaj, broj strana,
+  svi brojevi strana u sadržaju i svih 38 klikabilnih veza.
+  Dokument je pripremljen za poslednji pregled korisnice pre predaje.
+- Za naknadno osvežavanje sadržaja u Word-u birati ažuriranje samo brojeva
+  stranica: provereno je da tako kurziv ostaje sačuvan. Potpuno ponovno
+  generisanje sadržaja uklanja lokalni kurziv njegovih engleskih termina,
+  pa nakon takvog postupka treba ponovo primeniti kurziv u sadržaju.
+  Nove stilove radi toga ne uvoditi; osnovni tekst i kod se ne menjaju.
+- Tehnička napomena za održavanje dokumenta: posle generisanja sadržaja
+  Word izvoz ExportAsFixedFormat u ovoj sesiji nije završavao. PDF je uspešno
+  napravljen metodom SaveAs2 uz wdFormatPDF, bez prepisivanja DOCX stilova.
+  U DOCX je sačuvano ažurirano TOC polje, ne samo statički spisak naslova.
 - Tabela 1 je u celini na strani 5, u formatu tabele preuzetom iz šablona,
   sa natpisom iznad i automatskom unakrsnom referencom u prethodnom pasusu.
 - Tabela 2 (5 pseudo-instrukcija i njihovi prevodi) cela je na strani 7,
@@ -281,7 +304,8 @@ Bitne promene odobrenog sadržaja ponovo dogovoriti sa korisnicom.
 - Reference su na poslednjoj, zasebnoj, nenumerisanoj strani.
 - Dodatna objašnjenja, opširni listinzi, uputstva i slike koji nisu suština
   rada ostaju u zasebnom dokumentu, a ne služe za povećavanje obima rada.
-- Zahvalnica je opciona i ne sme biti duža od jedne strane.
+- Šablon dopušta opcionu zahvalnicu do jedne strane, ali je korisnica odlučila
+  da je u ovom radu ne bude.
 - Ne dodavati automatski sažetak, ključne reči, spiskove slika i tabela ili
   priloge samo zato što ih PDF pominje. Njih nema u Word šablonu;
   uključivanje treba posebno dogovoriti.
@@ -343,6 +367,15 @@ u novi prazan dokument. Original sačuvati neizmenjen.
 
 ### Jezičke smernice potvrđene posle pregleda teksta
 
+- Korisnica je 29.09.2026. potvrdila kurziv za engleske termine i nazive
+  kontrola u tekstu, tabelama i sadržaju, npr. little-endian, load-store,
+  strict, Step, Run i Reset, kao i za engleske izraze u objašnjenjima
+  skraćenica i naslovima izvora. Kurziv se primenjuje na označene reči,
+  bez menjanja definicija postojećih stilova.
+- Nazive tehnologija (TypeScript, Vite, Vitest itd.) ne naglašavati dodatnim
+  kurzivom. Postojeći izgled naslova i natpisa iz šablona ostaje na snazi.
+  Ne menjati format izvornih kodova, slika aplikacije, oznaka instrukcija
+  i registara, naziva datoteka i URL-adresa.
 - Korisnica želi prirodan, jasan i stručan srpski, a ne rečenice koje zvuče
   kao doslovan prevod sa engleskog. Primenjivati ovu smernicu pri pisanju
   i pri završnom čitanju svakog narednog poglavlja.
