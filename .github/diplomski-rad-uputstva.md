@@ -39,23 +39,21 @@
   da se objasni opcija strict, prirodnije poveže rečenica o CSS klasama i
   pojasni razlika između pripreme aplikacije i obrade unetog RISC-V programa.
   Izmene su primenjene, proverene i odobrene; poglavlje zauzima strane 9–10.
-- Pripremljeno je peto poglavlje sa svih osam dogovorenih potpoglavlja,
-  2 originalna dijagrama i 4 isečka stvarnog koda. Korisnica je prihvatila
-  sadržaj uz zahtev da se pojasni izraz listing i ispravi red reči u
-  „imena labela se ne menjaju”. Ranija pominjanja prikaza koda uskladiti
-  sa tim pojašnjenjem; ostali tekst ne menjati. Izmene su primenjene
-  i proverene u Word dokumentu i PDF-u.
+- Korisnica je odobrila peto poglavlje nakon pojašnjenja izraza za prikaz
+  izvornog koda i promene reda reči u „imena labela se ne menjaju”.
+  Prvih pet poglavlja ne menjati bez novog dogovora.
+- Pripremljeno je šesto poglavlje sa svih pet dogovorenih potpoglavlja
+  i 5 stvarnih snimaka aplikacije; čeka pregled korisnice.
 - Glavni dokument: [Diplomski-rad.docx](../docs/diplomski-rad/Diplomski-rad.docx).
 - Pregled za čitanje: [Diplomski-rad.pdf](../docs/diplomski-rad/Diplomski-rad.pdf).
-- Dokument trenutno sadrži prvih pet poglavlja i 11 referenci.
-  Naslovna strana, sadržaj i poglavlja 6–8 još nisu uneti; primeri i instrukcioni tekst
+- Dokument trenutno sadrži prvih šest poglavlja i 11 referenci.
+  Naslovna strana, sadržaj i poglavlja 7–8 još nisu uneti; primeri i instrukcioni tekst
   originalnog šablona nisu deo radne verzije.
-- Posle dodavanja petog poglavlja prelom je proveren u Microsoft Word-u:
+- Posle dodavanja šestog poglavlja prelom je proveren u Microsoft Word-u:
   uvod zauzima strane 1–2, drugo poglavlje strane 3–5, treće poglavlje
   strane 6–8, četvrto poglavlje strane 9–10, peto poglavlje strane 11–18,
-  a reference su na zasebnoj nenumerisanoj devetnaestoj strani.
-  Prva četiri poglavlja sačuvana su, osim naknadno zatraženog usklađivanja
-  izraza za prikaz koda u drugom i četvrtom poglavlju.
+  šesto poglavlje strane 19–22, a reference su na zasebnoj nenumerisanoj
+  dvadeset trećoj strani. Odobrene strane 1–18 provereno su neizmenjene.
   To nije provera obima celog budućeg rada.
 - Tabela 1 je u celini na strani 5, u formatu tabele preuzetom iz šablona,
   sa natpisom iznad i automatskom unakrsnom referencom u prethodnom pasusu.
@@ -67,6 +65,12 @@
   [tok-asembliranja.png](../docs/diplomski-rad/slike/tok-asembliranja.png).
   Centrirani su, široki najviše 80% prostora za tekst i imaju proverenu
   efektivnu rezoluciju oko 887 dpi.
+- Slike 3–7 su stvarni snimci ugrađenog primera „Zbir brojeva 1-5”:
+  unos (strana 19), četvrti Step i prvi breakpoint (strana 20),
+  završni rezultat (strana 21) i greška pri asembliranju (strana 22).
+  Snimci su u [direktorijumu sa slikama](../docs/diplomski-rad/slike/),
+  pod imenima sa prefiksom primer-. Širina ne prelazi 80% stranice,
+  a efektivna rezolucija je najmanje 600 dpi.
 - Segmenti izvornog koda 1–4 nalaze se redom na stranama 14–17:
   tip Instruction, funkcija assemble, deo metode step i petlja metode run.
   Kod je tekst u okviru preuzetom iz Word šablona, stilom Kod;
@@ -115,6 +119,18 @@
   daju pojednostavljen opis: Run poredi registre pre i posle cele akcije,
   ne ističe svaku međupromenu; Step posle uspešne poslednje instrukcije
   vraća ok, a naredni poziv halted; Reset ne asemblira ponovo program.
+- Scenario šestog poglavlja proveren je u stvarnom pregledaču pomoćnim
+  Playwright skriptom za snimanje ekrana. To nije dodavanje trajnog
+  end-to-end test paketa u projekat niti promena broja njegovih unit testova.
+  Evidencija provere sačuvana je u sesijskim artefaktima.
+- Proverene vrednosti za primer: posle četvrtog Step-a x1=1, x2=1, x3=6,
+  marker na liniji 8; na prvom breakpointu x1=1, x2=2, x3=6, marker na
+  liniji 7; na narednom x1=3, x2=3; na kraju x1=15, x2=6, x3=6 i
+  memorijska reč na adresi 0 iznosi 15. Provereno je i da Reset čuva breakpoint.
+- Proverene greške: zamena ADD instrukcijom MULT u liniji 7 ostavlja
+  aplikaciju u pisanju; zaseban program LI x1, 15 / SW x1, 2(x0) prijavljuje
+  neporavnatu adresu 0x002 u drugoj liniji bez upisa u memoriju.
+  Proveren je i dijalog Dokumentacija sa zatvaranjem tasterom Escape.
 - Pri nastavku prvo pročitati postojeći Word dokument i uključiti eventualne
   korisničke izmene; ne prepisivati ga slepo iz ranijih radnih izvora.
 
