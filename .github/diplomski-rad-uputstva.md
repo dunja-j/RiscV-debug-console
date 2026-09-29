@@ -1,5 +1,58 @@
 # Pravila za pripremu i pisanje diplomskog rada
 
+## Prezentacija za odbranu — stanje i dogovor
+
+- Korisnica je 29.09.2026. potvrdila da je pisani rad završen i odobren.
+  Ne menjati Word/PDF rada u okviru pripreme prezentacije.
+- Priprema se PPTX i tekst izlaganja za odbranu 30.09.2026.
+  Pre generisanja prezentacije usaglasiti sadržaj sa korisnicom.
+- Koristiti [priloženi PowerPoint šablon](<../../../Šablon diplomski rad - prezentacija.pptx>),
+  njegove postojeće rasporede, temu i format 16:9.
+- Uputstva iz šablona: 10–12 slajdova, izlaganje 10–15 minuta,
+  brojevi n/N osim na naslovnom i poslednjem slajdu, malo teksta,
+  preporučeno 3–5 stavki bez dubokog ugnježđavanja, prednost slikama.
+  Preporučena struktura u šablonu sme da se prilagodi temi.
+- Konkretniji zahtev korisnice: oko 10 slajdova i oko 10 minuta ukupno,
+  uključujući demonstraciju. Objasniti kontekst i rezultat bez ulaska
+  u implementacione detalje.
+- Publika je mešovita: porodica i prijatelji bez programerskog znanja,
+  kolege sa fakulteta, mentor i asistent kao komisija.
+- Dogovoreno je da se za demonstraciju rezervišu 2 minuta: video oko 1:45,
+  uz objašnjenje uživo i kratke prelaze. Postojeće slike služe kao rezerva
+  ako video ne bude spreman. Video se računa u ukupnih 10 minuta.
+- Korisnica je odobrila 10 slajdova, sa posebno pristupačnim drugim slajdom
+  „Šta zapravo znači naslov rada?” i objašnjenjima pojmova iz naslova.
+- Prezentacija je pripremljena:
+  [PPTX](../docs/prezentacija/Prezentacija-odbrana.pptx) i
+  [PDF za pregled](../docs/prezentacija/Prezentacija-odbrana.pdf).
+  Sačuvani su originalni master, tema, font Garamond i format 16:9.
+  Unutrašnji slajdovi nose oznake 2/10–9/10; naslovni i poslednji nemaju broj.
+- Redosled: naslov; značenje naslova; postojeći alati i cilj; tehnologije;
+  mogućnosti aplikacije; jednostavan tok podataka; demonstracija;
+  testiranje; ostvareno i budući razvoj; pitanja.
+- Govor je upisan u beleške svih 10 slajdova. Zaseban vodič za vežbanje:
+  [Word](../docs/prezentacija/Govor-i-scenario.docx) i
+  [PDF](../docs/prezentacija/Govor-i-scenario.pdf).
+  Vodič ima 7 strana, uključujući vremenski raspored, govor po slajdovima,
+  scenario za snimanje i umetanje videa i završni podsetnik na jednoj strani.
+- Planirano trajanje je 9:40, uz 0:20 rezerve; tekst glavnog govora ima oko
+  1055 reči. Stvarno trajanje treba proveriti probnim izlaganjem korisnice.
+  Slajd 7 ima 2:00 ukupno, uključujući video od 1:45 i uvod/prelaz.
+- Video još NIJE ugrađen jer korisnica nije dostavila snimak. Slajd 7
+  sadrži rezervnu sliku stvarnog završnog stanja i alternativni govor.
+  Ne predstavljati taj slajd kao ugrađen ili automatski generisan video.
+- Scenario za video: primer „Zbir brojeva 1-5”, Asembliraj, četiri Step-a,
+  klik na liniju 7 sa ADD i Run, ponovni Run, uklanjanje breakpointa,
+  završetak sa rezultatom 15, zatim Reset i novo pokretanje.
+  Važno: posle četiri Step-a marker je na liniji 8; tačka se tada postavlja
+  klikom na liniju 7, ne dugmetom za tekuću instrukciju.
+- Provereno u PowerPoint-u: svih 10 slajdova se iscrtava, svih 78 tekstualnih
+  polja staje u svoje okvire, nema automatskog prelaska slajdova ni odsečenog teksta.
+  Govor u beleškama i zasebnom vodiču je usklađen. Završeni rad i originalni
+  šablon prezentacije nisu menjani.
+- Pre daljih izmena prvo pročitati aktuelnu PPTX/Word verziju i sačuvati
+  eventualne korisničke dorade; ne prepisivati ih iz ranijih radnih skripti.
+
 ## Status i izvori pravila
 
 - Korisnica je 28.09.2026. potvrdila: Word šablon ima prednost; PDF služi
