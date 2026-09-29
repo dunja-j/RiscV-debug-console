@@ -44,21 +44,27 @@
   Prvih pet poglavlja ne menjati bez novog dogovora.
 - Korisnica je odobrila šesto poglavlje bez primedbi. Prvih šest poglavlja
   ne menjati bez novog dogovora.
-- Pripremljeno je sedmo poglavlje sa svih pet dogovorenih potpoglavlja,
-  tabelom stvarnih rezultata testova i isečkom regresionog testa. Korisnica
-  je prihvatila sadržaj uz zamenu izraza „snimci” izrazom „slike” u odeljku 7.4.
+- Korisnica je odobrila sedmo poglavlje posle zamene izraza „snimci”
+  izrazom „slike” u odeljku 7.4. Prvih sedam poglavlja ne menjati bez dogovora.
+- Pripremljen je zaključak (osmo poglavlje); čeka pregled korisnice.
+  Obuhvata ostvarene ciljeve, izazove, rezultate provere, ograničenja i
+  jasno označene predloge budućeg razvoja, bez novih neproverenih rezultata.
 - Glavni dokument: [Diplomski-rad.docx](../docs/diplomski-rad/Diplomski-rad.docx).
 - Pregled za čitanje: [Diplomski-rad.pdf](../docs/diplomski-rad/Diplomski-rad.pdf).
-- Dokument trenutno sadrži prvih sedam poglavlja i 12 referenci.
-  Naslovna strana, sadržaj i osmo poglavlje još nisu uneti; primeri i instrukcioni tekst
-  originalnog šablona nisu deo radne verzije.
-- Posle dodavanja sedmog poglavlja prelom je proveren u Microsoft Word-u:
+- Dokument trenutno sadrži svih osam poglavlja i 12 referenci.
+  Naslovna strana i automatski sadržaj još nisu uneti; primeri i instrukcioni
+  tekst originalnog šablona nisu deo radne verzije.
+- Posle dodavanja zaključka prelom je proveren u Microsoft Word-u:
   uvod zauzima strane 1–2, drugo poglavlje strane 3–5, treće poglavlje
   strane 6–8, četvrto poglavlje strane 9–10, peto poglavlje strane 11–18,
-  šesto poglavlje strane 19–22, sedmo poglavlje strane 23–25, a reference
-  su na zasebnoj nenumerisanoj dvadeset šestoj strani.
-  Odobrene strane 1–22 provereno su neizmenjene.
-  To nije provera obima celog budućeg rada.
+  šesto poglavlje strane 19–22, sedmo poglavlje strane 23–25, zaključak
+  strane 26–27, a reference su na zasebnoj nenumerisanoj dvadeset osmoj strani.
+  Odobrene strane 1–25 provereno su neizmenjene.
+  Glavni tekst ima 27 numerisanih strana i ispunjava mentorov minimum od 25.
+- Preostalo je: pregled i odobrenje zaključka, potvrda tačnog naslova i
+  podataka za naslovnu stranu, odluka o opcionoj zahvalnici, izrada naslovne
+  strane i automatskog sadržaja, pa završna jezička i tehnička provera.
+  Ne smatrati dokument spremnim za predaju dok se ovi koraci ne završe.
 - Tabela 1 je u celini na strani 5, u formatu tabele preuzetom iz šablona,
   sa natpisom iznad i automatskom unakrsnom referencom u prethodnom pasusu.
 - Tabela 2 (5 pseudo-instrukcija i njihovi prevodi) cela je na strani 7,
